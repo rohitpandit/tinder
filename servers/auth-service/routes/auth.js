@@ -1,7 +1,9 @@
 const express = require('express');
-
 const router = express.Router();
+const Auth = require('../models/Auth');
 
-router.post('/login', async (req, res) => {});
+router.get('/', (req, res) => {
+	res.json({ msg: 'hi' });
+});
 
-exports.default = router;
+module.exports = router;

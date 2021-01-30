@@ -1,6 +1,5 @@
 const express = require('express');
 const morgan = require('morgan');
-const bodyParser = require('body-parser');
 const db = require('./db');
 const userRoute = require('./routes/user');
 
@@ -8,8 +7,7 @@ const app = express();
 const port = 3001;
 
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.get('/', (req, res) => {
 	res.status(200);
