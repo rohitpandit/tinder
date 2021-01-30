@@ -8,9 +8,8 @@ const userSchema = mongoose.Schema({
 	lastName: {
 		type: String,
 	},
-	age: {
-		type: Number,
-		required: true,
+	dob: {
+		type: Date,
 	},
 	city: {
 		type: String,
