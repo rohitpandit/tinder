@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
 	firstName: {
@@ -7,7 +7,6 @@ const userSchema = mongoose.Schema({
 	},
 	lastName: {
 		type: String,
-		required: true,
 	},
 	age: {
 		type: Number,
@@ -15,19 +14,15 @@ const userSchema = mongoose.Schema({
 	},
 	city: {
 		type: String,
-		required: true,
 	},
 	state: {
 		type: String,
-		required: true,
 	},
-	zipCode: {
+	zipcode: {
 		type: Number,
-		required: true,
 	},
 	country: {
 		type: String,
-		required: true,
 	},
 	photos: [{ type: String }],
 });
