@@ -5,7 +5,7 @@ const db = require('./db');
 const userRoute = require('./routes/user');
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
