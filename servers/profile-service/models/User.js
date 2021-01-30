@@ -11,6 +11,9 @@ const userSchema = mongoose.Schema({
 	dob: {
 		type: Date,
 	},
+	gender: {
+		type: String,
+	},
 	city: {
 		type: String,
 	},
