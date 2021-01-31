@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const Auth = require('../models/Auth');
-const { pass, user } = require('../db');
 
 router.post('/login', async (req, res) => {
 	try {
@@ -47,6 +46,14 @@ router.post('/signup', async (req, res) => {
 		if (!email || !password) {
 			res.status(400).json({
 				msg: 'Enter email and password',
+			});
+			return;
+		}
+
+		const existUser = await Auth.findOne({ email });
+		if (existUser !== null) {
+			res.status(400).json({
+				msg: 'Email already exists',
 			});
 			return;
 		}

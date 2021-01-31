@@ -66,7 +66,7 @@ router
 			await newuser.save();
 			console.log('added');
 
-			res.status(201).json({ newuser });
+			res.status(201).json({ user: newuser });
 		} catch (err) {
 			res.status(500).json({
 				msg: err.message,
