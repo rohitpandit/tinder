@@ -83,11 +83,10 @@ router
 				state,
 				zipcode,
 				country,
+				userId,
 			} = req.body;
 
-			console.log(req.body.userId);
-
-			const user = await User.findOne({ _id: req.body.userId });
+			const user = await User.findOne({ _id: userId });
 			if (firstName) {
 				user.firstName = firstName;
 			}

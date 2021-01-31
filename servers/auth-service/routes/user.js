@@ -35,15 +35,6 @@ router
 				zipcode,
 				country,
 			} = req.body;
-			console.log({
-				firstName,
-				lastName,
-				dob,
-				city,
-				state,
-				zipcode,
-				country,
-			});
 			if (
 				!firstName ||
 				!lastName ||
@@ -68,6 +59,38 @@ router
 				state,
 				zipcode,
 				country,
+			});
+			console.log(result.data.user);
+			res.status(200).json({ user: result.data.user });
+			return;
+		} catch (error) {
+			res.status(500).json({
+				msg: error.message,
+			});
+		}
+	})
+	.put(async (req, res) => {
+		try {
+			const {
+				firstName,
+				lastName,
+				dob,
+				city,
+				state,
+				zipcode,
+				country,
+				userId,
+			} = req.body;
+
+			const result = await axios.put('http://localhost:3001/user/', {
+				firstName,
+				lastName,
+				dob,
+				city,
+				state,
+				zipcode,
+				country,
+				userId,
 			});
 			console.log(result.data.user);
 			res.status(200).json({ user: result.data.user });
