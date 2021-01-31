@@ -100,6 +100,23 @@ router
 				msg: error.message,
 			});
 		}
+	})
+	.delete(async (req, res) => {
+		try {
+			const { userId } = req.body;
+			if (!userId) {
+				res.status(400).json({
+					msg: 'userId missing',
+				});
+				return;
+			}
+
+			const result = await axios.delete('http://localhost:3001/user/');
+
+			//TODO implement delete
+		} catch (error) {
+			res.status(500).json({ msg: error.message });
+		}
 	});
 
 module.exports = router;

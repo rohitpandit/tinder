@@ -4,18 +4,11 @@ const User = require('../models/User');
 const router = express.Router();
 
 router
-	.route('/')
+	.route('/:userId')
 	.get(async (req, res) => {
 		try {
-			const { userId } = req.body;
+			const { userId } = req.params;
 			console.log(userId);
-			if (!userId) {
-				console.log('userId missing');
-				res.status(400).json({
-					msg: 'userId is missing',
-				});
-				return;
-			}
 
 			const user = await User.findOne({ _id: userId });
 			res.json({ user: user });
@@ -53,6 +46,7 @@ router
 			}
 
 			const newuser = new User({
+				_id: userId,
 				firstName,
 				lastName,
 				dob,
@@ -83,8 +77,9 @@ router
 				state,
 				zipcode,
 				country,
-				userId,
 			} = req.body;
+
+			const { userId } = req.params;
 
 			const user = await User.findOne({ _id: userId });
 			if (firstName) {
@@ -114,7 +109,7 @@ router
 			await user.save();
 			console.log('added');
 
-			res.status(200).json({ user });
+			res.status(200).json({ user: user });
 		} catch (err) {
 			res.status(500).json({
 				msg: err.message,
@@ -123,14 +118,7 @@ router
 	})
 	.delete(async (req, res) => {
 		try {
-			const { userId } = req.body;
-
-			if (!userId) {
-				res.status(400).json({
-					msg: 'UserId is missing',
-				});
-				return;
-			}
+			const { userId } = req.params;
 
 			await User.deleteOne({ _id: userId });
 			res.status(200).json({
