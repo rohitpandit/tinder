@@ -9,11 +9,8 @@ router
 			const { userId } = req.body;
 			console.log(userId);
 			console.log('in the get user ');
-			const result = await axios.get('http://localhost:3001/user/', {
+			const result = await axios.get(`http://localhost:3001/user/:userId`, {
 				header: { 'content-type': 'application/json' },
-				data: {
-					userId,
-				},
 			});
 			console.log(result.data.user);
 			res.status(200).json({ user: result.data.user });
@@ -51,7 +48,7 @@ router
 				return;
 			}
 
-			const result = await axios.post('http://localhost:3001/user/', {
+			const result = await axios.post(`http://localhost:3001/user/`, {
 				firstName,
 				lastName,
 				dob,
@@ -82,7 +79,7 @@ router
 				userId,
 			} = req.body;
 
-			const result = await axios.put('http://localhost:3001/user/', {
+			const result = await axios.put(`http://localhost:3001/user/`, {
 				firstName,
 				lastName,
 				dob,
@@ -111,7 +108,7 @@ router
 				return;
 			}
 
-			const result = await axios.delete('http://localhost:3001/user/');
+			const result = await axios.delete(`http://localhost:3001/user/`);
 
 			//TODO implement delete
 		} catch (error) {
