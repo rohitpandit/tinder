@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 const Signup = () => {
 	return (
@@ -24,6 +24,7 @@ const Signup = () => {
 						type='password'
 						className='form-control'
 						id='password'
+						minLength='5'
 						required
 					/>
 				</div>
@@ -35,6 +36,7 @@ const Signup = () => {
 						type='password'
 						className='form-control'
 						id='confirmPassword'
+						minLength='5'
 						required
 					/>
 				</div>
