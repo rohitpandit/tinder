@@ -38,7 +38,7 @@ const Navbar = () => {
 						<li className='nav-item'>
 							<form action='/logout' method='POST'>
 								<buttom type='submit'>
-									<Link className='nav-link' to='/fasd'>
+									<Link className='nav-link' to='/'>
 										Logout
 									</Link>
 								</buttom>
