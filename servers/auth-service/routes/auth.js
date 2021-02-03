@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const Auth = require('../models/Auth');
-const generateToken = require('../utils/generateToken.js');
+const jwt = require('jsonwebtoken');
 
 router.post('/login', async (req, res) => {
 	try {
@@ -30,7 +30,7 @@ router.post('/login', async (req, res) => {
 			return;
 		}
 
-		const token = generateToken(user._id);
+		const token = jwt.sign({ id: user._id }, 'hi');
 		res.status(200).json({
 			token,
 		});

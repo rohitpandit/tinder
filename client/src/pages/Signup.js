@@ -1,35 +1,63 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-const Signup = () => {
+const Signup = ({ history }) => {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [confirmPassword, setConfirmPassword] = useState('');
+
+	const onSubmitHandler = async (e) => {
+		e.preventDefault();
+
+		if (password === confirmPassword) {
+			const res = await axios.post('http://localhost:5000/auth/signup', {
+				email,
+				password,
+			});
+
+			if (res.status !== 201) {
+				console.log(res.msg);
+				return;
+			}
+
+			localStorage.setItem('token', res.data.token);
+			history.push('/profile');
+		}
+	};
+
 	return (
 		<div style={box}>
-			<form style={style}>
+			<form style={style} onSubmit={onSubmitHandler}>
 				<h1 className='text-center'>Signup</h1>
 				<hr />
 				<div className='mb-3'>
-					<label for='email'>Email address</label>
+					<label htmlFor='email'>Email address</label>
 					<input
 						type='email'
 						className='form-control'
 						id='email'
 						aria-describedby='emailHelp'
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
 						required
 					/>
 				</div>
 				<div className='mb-3'>
-					<label for='password' className='form-label'>
+					<label htmlFor='password' className='form-label'>
 						Password
 					</label>
 					<input
 						type='password'
 						className='form-control'
 						id='password'
+						value={password}
+						onChange={(e) => setPassword(e.target.value)}
 						minLength='5'
 						required
 					/>
 				</div>
 				<div className='mb-3'>
-					<label for='confirmPassword' className='form-label'>
+					<label htmlFor='confirmPassword' className='form-label'>
 						Password
 					</label>
 					<input
@@ -37,6 +65,8 @@ const Signup = () => {
 						className='form-control'
 						id='confirmPassword'
 						minLength='5'
+						value={confirmPassword}
+						onChange={(e) => setConfirmPassword(e.target.value)}
 						required
 					/>
 				</div>

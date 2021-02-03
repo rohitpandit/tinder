@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
 
 const Login = ({ history }) => {
 	const [email, setEmail] = useState('');
@@ -13,9 +12,10 @@ const Login = ({ history }) => {
 			password,
 		});
 
-		console.log(res);
+		console.log(res.data.token);
 
 		if (res.status === 200) {
+			localStorage.setItem('token', res.data.token);
 			history.push('/profile');
 		}
 	};

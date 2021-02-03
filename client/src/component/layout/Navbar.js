@@ -37,11 +37,11 @@ const Navbar = () => {
 						</li>
 						<li className='nav-item'>
 							<form action='/logout' method='POST'>
-								<buttom type='submit'>
+								<button type='submit'>
 									<Link className='nav-link' to='/'>
 										Logout
 									</Link>
-								</buttom>
+								</button>
 							</form>
 						</li>
 					</ul>
