@@ -30,7 +30,7 @@ router.post('/login', async (req, res) => {
 			return;
 		}
 
-		const token = jwt.sign({ id: user._id }, 'hi');
+		const token = jwt.sign({ id: user._id }, 'test');
 		res.status(200).json({
 			token,
 		});
@@ -69,7 +69,9 @@ router.post('/signup', async (req, res) => {
 
 		await newUser.save();
 
-		res.status(201).json({ user: newUser });
+		const token = jwt.sign({ id: newUser._id }, 'test');
+
+		res.status(201).json({ user: newUser, token });
 	} catch (error) {
 		res.status(400).json({
 			msg: error.message,

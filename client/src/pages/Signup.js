@@ -19,6 +19,7 @@ const Signup = ({ history }) => {
 				console.log(res.msg);
 				return;
 			}
+			console.log(res.data.token);
 
 			localStorage.setItem('token', res.data.token);
 			history.push('/profile');

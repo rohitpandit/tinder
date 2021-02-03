@@ -4,7 +4,7 @@ const db = require('./db');
 const userRoute = require('./routes/user');
 
 const app = express();
-const port = 3001;
+const port = 5001;
 
 app.use(morgan('dev'));
 app.use(express.json());
