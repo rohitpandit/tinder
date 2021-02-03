@@ -12,7 +12,7 @@ const style = {
 	backgroundColor: 'var(--theme-main)',
 	display: 'flex',
 	justifyContent: 'center',
-	position: 'absolute',
+	position: 'relative',
 	bottom: '0px',
 };
 

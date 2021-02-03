@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import axios from 'axios';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Index from './pages/Index';
@@ -9,6 +10,10 @@ import Profile from './pages/Profile';
 import PageNotFound from './pages/PageNotFound';
 import './bootstrap.min.css';
 import './app.css';
+
+axios.defaults.headers.common = {
+	Authorization: `Bearer ${localStorage.getItem('token')}`,
+};
 
 function App() {
 	return (
