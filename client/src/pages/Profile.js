@@ -6,20 +6,25 @@ import axios from 'axios';
 const Profile = () => {
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
-	const [dob, setDob] = useState(Date());
+	const [dob, setDob] = useState('');
 	const [city, setCity] = useState('');
 	const [state, setState] = useState('');
 	const [zipcode, setZipcode] = useState('');
-	const [county, setCountry] = useState('');
+	const [country, setCountry] = useState('');
 
-	useEffect(async () => {
-		const initialData = await axios.get('http://localhost:5000/user');
-		if (initialData.status !== 200) {
-			console.log(initialData.msg);
-			return;
-		}
+	useEffect(() => {
+		const getData = async () => {
+			const initialData = await axios.get('http://localhost:5000/user');
+			if (initialData.status !== 200) {
+				console.log(initialData.msg);
+				return;
+			}
 
-		console.log(initialData.data);
+			console.log(initialData.data);
+		};
+
+		getData();
+		//eslint-disble-next-line
 	}, []);
 
 	const onSubmitHandler = async (e) => {
@@ -31,19 +36,27 @@ const Profile = () => {
 			dob === '' ||
 			state === '' ||
 			city === '' ||
-			county === '' ||
+			country === '' ||
 			zipcode === ''
 		) {
 			console.log('Enter all the fields');
 			return;
 		}
+
+		//formatting the date
+		console.log(typeof dob);
+		setDob(new Date(dob));
+		console.log(typeof dob);
+		console.log(dob);
+		console.log(country);
+
 		const res = await axios.put('http://localhost:5000/user', {
 			firstName,
 			lastName,
 			dob,
 			state,
 			city,
-			county,
+			country,
 			zipcode,
 		});
 
@@ -165,7 +178,7 @@ const Profile = () => {
 									className='form-control'
 									id='basic-url'
 									aria-describedby='basic-addon3'
-									value={county}
+									value={country}
 									onChange={(e) => setCountry(e.target.value)}
 								/>
 							</div>
@@ -181,35 +194,35 @@ const Profile = () => {
 							<img
 								src='https://i.redd.it/0gicq802q5f61.jpg'
 								className='img-fluid  img-thumbnail'
-								alt='Responsive image'
+								alt='Responsive '
 							/>
 						</div>
 						<div className='w-50'>
 							<img
 								src='https://i.redd.it/0gicq802q5f61.jpg'
 								className='img-fluid max-width-10 img-thumbnail'
-								alt='Responsive image'
+								alt='Responsive '
 							/>
 						</div>
 						<div className='w-50'>
 							<img
 								src='https://i.redd.it/0gicq802q5f61.jpg'
 								className='img-fluid max-width-10 img-thumbnail'
-								alt='Responsive image'
+								alt='Responsive '
 							/>
 						</div>
 						<div className='w-50'>
 							<img
 								src='https://i.redd.it/0gicq802q5f61.jpg'
 								className='img-fluid max-width-10 img-thumbnail'
-								alt='Responsive image'
+								alt='Responsive '
 							/>
 						</div>
 						<div className='w-50'>
 							<img
 								src='https://i.redd.it/0gicq802q5f61.jpg'
 								className='img-fluid max-width-10 img-thumbnail'
-								alt='Responsive image'
+								alt='Responsive '
 							/>
 						</div>
 					</div>

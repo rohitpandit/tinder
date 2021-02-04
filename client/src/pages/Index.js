@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import Footer from '../component/layout/Footer';
 import Navbar from '../component/layout/Navbar';
 

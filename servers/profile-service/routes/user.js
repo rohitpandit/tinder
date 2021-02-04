@@ -4,15 +4,14 @@ const User = require('../models/User');
 const router = express.Router();
 
 router
-	.route('/')
+	.route('/:id')
 	.get(async (req, res) => {
 		try {
-			const { userId } = req.params;
-			console.log(userId);
-
-			const user = await User.findOne({ _id: userId });
+			const user = await User.findOne({ _id: req.params.id });
 			res.json({ user: user });
 		} catch (err) {
+			console.log(err.message);
+
 			res.status(500).json({
 				msg: err.message,
 			});
@@ -62,6 +61,8 @@ router
 
 			res.status(201).json({ user: newuser });
 		} catch (err) {
+			console.log(err.message);
+
 			res.status(500).json({
 				msg: err.message,
 			});
@@ -79,38 +80,53 @@ router
 				country,
 			} = req.body;
 
-			const { userId } = req.params;
+			const { id } = req.params;
 
-			const user = await User.findOne({ _id: userId });
-			if (firstName) {
-				user.firstName = firstName;
-			}
-			if (lastName) {
-				user.lastName = lastName;
-			}
-			if (dob) {
-				user.dob = dob;
-			}
-			if (city) {
-				user.city = city;
-			}
-			if (state) {
-				user.state = state;
-			}
-			if (country) {
-				user.country = country;
-			}
-			if (zipcode) {
-				user.zipcode = zipcode;
-			}
+			const user = await User.findOne({ _id: id });
+			if (user) {
+				if (firstName) {
+					user.firstName = firstName;
+				}
+				if (lastName) {
+					user.lastName = lastName;
+				}
+				if (dob) {
+					user.dob = dob;
+				}
+				if (city) {
+					user.city = city;
+				}
+				if (state) {
+					user.state = state;
+				}
+				if (country) {
+					user.country = country;
+				}
+				if (zipcode) {
+					user.zipcode = zipcode;
+				}
 
-			console.log('adding');
+				console.log('adding');
 
-			await user.save();
-			console.log('added');
-
-			res.status(200).json({ user: user });
+				await user.save();
+				console.log('added');
+				res.status(200).json({ user: user });
+			} else {
+				const newUser = new User({
+					firstName,
+					lastName,
+					dob,
+					city,
+					state,
+					country,
+					zipcode,
+				});
+				await newUser.save();
+				res.status(200).json({ user: newUser });
+			}
 		} catch (err) {
+			console.log(err.message);
+
 			res.status(500).json({
 				msg: err.message,
 			});
@@ -118,13 +134,14 @@ router
 	})
 	.delete(async (req, res) => {
 		try {
-			const { userId } = req.params;
+			const { id } = req.params;
 
-			await User.deleteOne({ _id: userId });
+			await User.deleteOne({ _id: id });
 			res.status(200).json({
 				msg: 'Deleted successfully',
 			});
 		} catch (error) {
+			console.log(error.message);
 			res.status(500).json({
 				msg: err.message,
 			});

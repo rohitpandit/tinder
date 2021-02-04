@@ -98,7 +98,6 @@ router
 				state,
 				zipcode,
 				country,
-				userId,
 			} = req.body;
 			if (
 				!firstName ||
@@ -109,6 +108,7 @@ router
 				!zipcode ||
 				!country
 			) {
+				console.log(firstName, lastName, dob, city, state, country, zipcode);
 				console.log('Enter all the details');
 				res.status(400).json({
 					msg: 'Enter all the details',
@@ -135,7 +135,6 @@ router
 					state,
 					zipcode,
 					country,
-					userId,
 				}
 			);
 			console.log(result.data.user);
