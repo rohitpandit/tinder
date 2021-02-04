@@ -9,6 +9,7 @@ router
 		try {
 			const user = await User.findOne({ _id: req.params.id });
 			console.log(user);
+			user.photos = [];
 			res.json({ user: user });
 		} catch (err) {
 			console.log(err.message);

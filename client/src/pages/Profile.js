@@ -13,16 +13,19 @@ const Profile = () => {
 	const [zipcode, setZipcode] = useState('');
 	const [country, setCountry] = useState('');
 	const [avtars, setAvtars] = useState([]);
+	const [tempImages, setTempImages] = useState([]);
+	const [tempImage, setTempImage] = useState(null);
 
 	useEffect(() => {
+		//getting all the profile data from the server
 		const getData = async () => {
 			const initialData = await axios.get('http://localhost:5000/user');
 			if (initialData.status !== 200) {
-				console.log(initialData.msg);
+				// console.log(initialData.msg);
 				return;
 			}
 
-			console.log(initialData.data);
+			// console.log(initialData.data);
 			const data = initialData.data.user;
 			setFirstName(data.firstName);
 			setLastName(data.lastName);
@@ -31,17 +34,13 @@ const Profile = () => {
 			setState(data.state);
 			setZipcode(data.zipcode);
 			setCountry(data.country);
-			setAvtars([
-				'https://i.redd.it/0gicq802q5f61.jpg',
-				'https://i.redd.it/0gicq802q5f61.jpg',
-				'https://i.redd.it/0gicq802q5f61.jpg',
-				'https://i.redd.it/0gicq802q5f61.jpg',
-			]);
+			setAvtars(data.photos);
 		};
 
 		getData();
 	}, []);
 
+	//Form submit for the user information
 	const onSubmitHandler = async (e) => {
 		e.preventDefault();
 		if (
@@ -53,7 +52,7 @@ const Profile = () => {
 			country === '' ||
 			zipcode === ''
 		) {
-			console.log('Enter all the fields');
+			// console.log('Enter all the fields');
 			return;
 		}
 
@@ -68,11 +67,23 @@ const Profile = () => {
 		});
 
 		if (res.status !== 200) {
-			console.log(res.msg);
+			// console.log(res.msg);
 			return;
 		}
 
 		console.log('saved successfully');
+	};
+
+	const onUploadHandler = async (e) => {
+		e.preventDefault();
+
+		if (tempImages.length === 5) {
+			console.log('You can have 5 images at max');
+			return;
+		}
+
+		setTempImages([tempImage, ...tempImages]);
+		return;
 	};
 
 	return (
@@ -197,17 +208,16 @@ const Profile = () => {
 
 					{/* image */}
 					<div className='col-8'>
-						<form
-							className='mb-2'
-							onSubmit='uploadHandler'
-							encType='multipart/form-data'>
-							<div class='custom-file'>
+						<form onSubmit={onUploadHandler} className='mb-2'>
+							<div className='custom-file'>
 								<input
 									type='file'
-									class='custom-file-input mb-10'
+									className='custom-file-input mb-10'
 									id='inputGroupFile01'
+									onChange={(e) => setTempImage(e.target.files[0])}
+									required
 								/>
-								<label class='custom-file-label' htmlFor='inputGroupFile01'>
+								<label className='custom-file-label' htmlFor='inputGroupFile01'>
 									Choose file
 								</label>
 							</div>
