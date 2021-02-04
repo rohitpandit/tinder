@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Navbar from '../component/layout/Navbar';
 import Footer from '../component/layout/Footer';
-import axios from 'axios';
+import Image from '../component/Image';
 
 const Profile = () => {
 	const [firstName, setFirstName] = useState('');
@@ -11,6 +12,7 @@ const Profile = () => {
 	const [state, setState] = useState('');
 	const [zipcode, setZipcode] = useState('');
 	const [country, setCountry] = useState('');
+	const [avtars, setAvtars] = useState([]);
 
 	useEffect(() => {
 		const getData = async () => {
@@ -29,6 +31,12 @@ const Profile = () => {
 			setState(data.state);
 			setZipcode(data.zipcode);
 			setCountry(data.country);
+			setAvtars([
+				'https://i.redd.it/0gicq802q5f61.jpg',
+				'https://i.redd.it/0gicq802q5f61.jpg',
+				'https://i.redd.it/0gicq802q5f61.jpg',
+				'https://i.redd.it/0gicq802q5f61.jpg',
+			]);
 		};
 
 		getData();
@@ -48,9 +56,6 @@ const Profile = () => {
 			console.log('Enter all the fields');
 			return;
 		}
-
-		//formatting the date
-		setDob(new Date(dob));
 
 		const res = await axios.put('http://localhost:5000/user', {
 			firstName,
@@ -185,47 +190,91 @@ const Profile = () => {
 								/>
 							</div>
 							<button className='btn btn-primary btn-block' type='submit'>
-								Save
+								Apply Changes
 							</button>
 						</form>
 					</div>
 
 					{/* image */}
-					<div className='d-flex flex-wrap col-8'>
-						<div className='w-50'>
-							<img
-								src='https://i.redd.it/0gicq802q5f61.jpg'
-								className='img-fluid  img-thumbnail'
-								alt='Responsive '
-							/>
-						</div>
-						<div className='w-50'>
-							<img
-								src='https://i.redd.it/0gicq802q5f61.jpg'
-								className='img-fluid max-width-10 img-thumbnail'
-								alt='Responsive '
-							/>
-						</div>
-						<div className='w-50'>
-							<img
-								src='https://i.redd.it/0gicq802q5f61.jpg'
-								className='img-fluid max-width-10 img-thumbnail'
-								alt='Responsive '
-							/>
-						</div>
-						<div className='w-50'>
-							<img
-								src='https://i.redd.it/0gicq802q5f61.jpg'
-								className='img-fluid max-width-10 img-thumbnail'
-								alt='Responsive '
-							/>
-						</div>
-						<div className='w-50'>
-							<img
-								src='https://i.redd.it/0gicq802q5f61.jpg'
-								className='img-fluid max-width-10 img-thumbnail'
-								alt='Responsive '
-							/>
+					<div className='col-8'>
+						<form
+							className='mb-2'
+							onSubmit='uploadHandler'
+							encType='multipart/form-data'>
+							<div class='custom-file'>
+								<input
+									type='file'
+									class='custom-file-input mb-10'
+									id='inputGroupFile01'
+								/>
+								<label class='custom-file-label' htmlFor='inputGroupFile01'>
+									Choose file
+								</label>
+							</div>
+							<button
+								className='btn btn-primary btn-block mt-2 mb-4'
+								type='submit'>
+								Upload
+							</button>
+						</form>
+						<hr />
+						{avtars.length === 0 && <div>Upload some images</div>}
+						<div className='d-flex flex-wrap'>
+							<Image className=''>
+								{avtars.length >= 1 ? (
+									<img
+										src={avtars[0]}
+										className='img-fluid overflow-none'
+										alt='Responsive '
+									/>
+								) : (
+									<></>
+								)}
+							</Image>
+							<Image className=''>
+								{avtars.length >= 2 ? (
+									<img
+										src={avtars[1]}
+										className='img-fluid '
+										alt='Responsive '
+									/>
+								) : (
+									<></>
+								)}
+							</Image>
+							<Image className=''>
+								{avtars.length >= 3 ? (
+									<img
+										src={avtars[2]}
+										className='img-fluid '
+										alt='Responsive '
+									/>
+								) : (
+									<></>
+								)}
+							</Image>
+							<Image className=''>
+								{avtars.length >= 4 ? (
+									<img
+										src={avtars[3]}
+										className='img-fluid '
+										alt='Responsive '
+									/>
+								) : (
+									<></>
+								)}
+							</Image>
+							<Image className=''>
+								{avtars.length >= 5 ? (
+									<img
+										src={avtars[4]}
+										className='img-fluid '
+										alt='Responsive '
+									/>
+								) : (
+									<></>
+								)}
+							</Image>
 						</div>
 					</div>
 				</div>
