@@ -8,6 +8,7 @@ router
 	.get(async (req, res) => {
 		try {
 			const user = await User.findOne({ _id: req.params.id });
+			console.log(user);
 			res.json({ user: user });
 		} catch (err) {
 			console.log(err.message);
@@ -45,7 +46,7 @@ router
 			}
 
 			const newuser = new User({
-				_id: userId,
+				_id: req.params.id,
 				firstName,
 				lastName,
 				dob,
@@ -84,6 +85,7 @@ router
 
 			const user = await User.findOne({ _id: id });
 			if (user) {
+				console.log('in the if');
 				if (firstName) {
 					user.firstName = firstName;
 				}
@@ -112,7 +114,9 @@ router
 				console.log('added');
 				res.status(200).json({ user: user });
 			} else {
+				console.log('in the else');
 				const newUser = new User({
+					_id: id,
 					firstName,
 					lastName,
 					dob,

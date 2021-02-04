@@ -21,15 +21,21 @@ const Profile = () => {
 			}
 
 			console.log(initialData.data);
+			const data = initialData.data.user;
+			setFirstName(data.firstName);
+			setLastName(data.lastName);
+			setDob(data.dob.split('T')[0]);
+			setCity(data.city);
+			setState(data.state);
+			setZipcode(data.zipcode);
+			setCountry(data.country);
 		};
 
 		getData();
-		//eslint-disble-next-line
 	}, []);
 
 	const onSubmitHandler = async (e) => {
 		e.preventDefault();
-		console.log('saved');
 		if (
 			firstName === '' ||
 			lastName === '' ||
@@ -44,11 +50,7 @@ const Profile = () => {
 		}
 
 		//formatting the date
-		console.log(typeof dob);
 		setDob(new Date(dob));
-		console.log(typeof dob);
-		console.log(dob);
-		console.log(country);
 
 		const res = await axios.put('http://localhost:5000/user', {
 			firstName,

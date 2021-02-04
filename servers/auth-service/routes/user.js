@@ -23,7 +23,7 @@ router
 					headers: { 'content-type': 'application/json' },
 				}
 			);
-			console.log(result.data.user);
+			console.log(result.data);
 			res.status(200).json({ user: result.data.user });
 			return;
 		} catch (error) {
