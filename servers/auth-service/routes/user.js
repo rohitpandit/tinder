@@ -142,7 +142,6 @@ router
 					state,
 					zipcode,
 					country,
-					photos,
 				}
 			);
 			console.log(result.data.user);
@@ -183,11 +182,14 @@ router.put('/photos', upload.single('newAvtar'), async (req, res) => {
 		}
 
 		console.log(req.file);
-		const confit = {
+		const config = {
 			headers: {
-				'content-type': 'multipart/form-data',
+				// 'content-type': 'multipart/form-data',
+				'content-type': 'application/json',
 			},
 		};
+
+		req.file.filename = 'newAvtar';
 		const result = await axios.put(
 			`http://localhost:5001/user/photos/${decoded.id}`,
 			req.file,
@@ -195,7 +197,9 @@ router.put('/photos', upload.single('newAvtar'), async (req, res) => {
 		);
 
 		res.status(200).send('done');
-	} catch (error) {}
+	} catch (error) {
+		res.status(500).json({ msg: error.message });
+	}
 });
 
 module.exports = router;

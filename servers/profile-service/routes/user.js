@@ -2,6 +2,11 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const User = require('../models/User');
+const multer = require('multer');
+
+const upload = multer({
+	dest: `./upload`,
+});
 
 const router = express.Router();
 
@@ -143,7 +148,35 @@ router
 		}
 	});
 
-router.put('/photos/:id', async (req, res) => {
+router.put('/photos/:id', upload.single('newAvtar'), async (req, res) => {
+	const dir = `./upload/${req.params.id}/`;
+
+	console.log(req.file);
+
+	if (fs.existsSync(`./upload/${req.params.id}`)) {
+		fs.readdir(`./upload/${req.params.id}`, (err, files) => {
+			if (err) {
+				console.log(err);
+			}
+			const count = files.length;
+			fs.rename(
+				`./upload/${req.file.filename}`,
+				`./upload/${req.params.id}/${count}.jpeg`,
+				(err) => {
+					if (err) {
+						console.log(err);
+					}
+				}
+			);
+		});
+	} else {
+		fs.mkdir(`./upload/${req.params.id}`, (err) => {
+			if (err) {
+				console.log(err);
+			}
+		});
+	}
+
 	res.send('photo update');
 });
 
