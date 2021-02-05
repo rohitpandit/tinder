@@ -3,8 +3,10 @@ const axios = require('axios');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const router = express.Router();
+const FormData = require('form-data');
+const getStream = require('get-stream');
 
-const upload = multer({ dest: 'upload/' });
+const upload = multer();
 
 router
 	.route('/')
@@ -181,24 +183,33 @@ router.put('/photos', upload.single('newAvtar'), async (req, res) => {
 			console.log(decoded.id);
 		}
 
+		const buffer = req.file.buffer;
 		console.log(req.file);
+
 		const config = {
 			headers: {
-				// 'content-type': 'multipart/form-data',
-				'content-type': 'application/json',
+				'content-type': 'multipart/form-data',
 			},
 		};
 
-		req.file.filename = 'newAvtar';
+		// const form = new FormData();
+		// console.log(req.file);
+		// console.log('formdata');
+		// form.append('newAvtar', req.file);
+
+		const form = {
+			newAvtar: req.file,
+		};
+
 		const result = await axios.put(
 			`http://localhost:5001/user/photos/${decoded.id}`,
-			req.file,
-			config
+			form
+			// config
 		);
 
 		res.status(200).send('done');
 	} catch (error) {
-		res.status(500).json({ msg: error.message });
+		res.status(500).json({ msg: error.stack });
 	}
 });
 

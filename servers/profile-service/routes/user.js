@@ -148,10 +148,11 @@ router
 		}
 	});
 
-router.put('/photos/:id', upload.single('newAvtar'), async (req, res) => {
+//router for uploading photo
+router.put('/photos/:id', async (req, res) => {
 	const dir = `./upload/${req.params.id}/`;
 
-	console.log(req.file);
+	console.log(req.body);
 
 	if (fs.existsSync(`./upload/${req.params.id}`)) {
 		fs.readdir(`./upload/${req.params.id}`, (err, files) => {
@@ -159,9 +160,10 @@ router.put('/photos/:id', upload.single('newAvtar'), async (req, res) => {
 				console.log(err);
 			}
 			const count = files.length;
-			fs.rename(
-				`./upload/${req.file.filename}`,
+
+			fs.writeFile(
 				`./upload/${req.params.id}/${count}.jpeg`,
+				Buffer.from(req.body.newAvtar.buffer.data),
 				(err) => {
 					if (err) {
 						console.log(err);
