@@ -160,25 +160,48 @@ router.put('/photos/:id', async (req, res) => {
 		const { id } = req.params;
 		const user = User.findOne({ _id: id });
 
+		//if the folder already exist for a particular user otherwise create a folder first
 		if (fs.existsSync(`./upload/${id}`)) {
 			const files = await fs_readdir(`./upload/${id}`);
 			const count = files.length;
 
-			const write = await fs_writeFile(
+			await fs_writeFile(
 				`./upload/${id}/${count}.jpeg`,
 				Buffer.from(req.body.newAvtar.buffer.data)
 			);
-			console.log(write);
+
+			const user = await User.findById({ _id: id });
+			if (user.photosUrl.length === 0) {
+				user.photosUrl.push(`./upload/${id}/${count}.jpeg`);
+				console.log(user.photosUrl[0]);
+			} else {
+				const photoUrl = [...user.photosUrl];
+				photoUrl.push(`./upload/${id}/${count}.jpeg`);
+				user.photosUrl = photoUrl;
+				console.log(user.photosUrl);
+			}
+			await user.save();
 		} else {
 			const dir = await fs_mkdir(`./upload/${req.params.id}`);
 
 			const count = 0;
 
-			const write = fs_writeFile(
+			fs_writeFile(
 				`./upload/${req.params.id}/${count}.jpeg`,
 				Buffer.from(req.body.newAvtar.buffer.data)
 			);
-			console.log(write);
+
+			const user = await User.findById({ _id: id });
+			if (user.photosUrl.length === 0) {
+				user.photosUrl.push(`./upload/${id}/${count}.jpeg`);
+				console.log(user.photosUrl[0]);
+			} else {
+				const photoUrl = [...user.photosUrl];
+				photoUrl.push(`./upload/${id}/${count}.jpeg`);
+				user.photosUrl = photoUrl;
+				console.log(user.photosUrl);
+			}
+			await user.save();
 		}
 
 		res.send('photo update');
