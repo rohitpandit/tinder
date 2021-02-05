@@ -1,4 +1,6 @@
 const express = require('express');
+const fs = require('fs');
+const path = require('path');
 const User = require('../models/User');
 
 const router = express.Router();
@@ -80,34 +82,22 @@ router
 				state,
 				zipcode,
 				country,
+				photos,
 			} = req.body;
 
 			const { id } = req.params;
+			console.log(req);
 
 			const user = await User.findOne({ _id: id });
 			if (user) {
 				console.log('in the if');
-				if (firstName) {
-					user.firstName = firstName;
-				}
-				if (lastName) {
-					user.lastName = lastName;
-				}
-				if (dob) {
-					user.dob = dob;
-				}
-				if (city) {
-					user.city = city;
-				}
-				if (state) {
-					user.state = state;
-				}
-				if (country) {
-					user.country = country;
-				}
-				if (zipcode) {
-					user.zipcode = zipcode;
-				}
+				user.firstName = firstName;
+				user.lastName = lastName;
+				user.dob = dob;
+				user.city = city;
+				user.state = state;
+				user.country = country;
+				user.zipcode = zipcode;
 
 				console.log('adding');
 
@@ -152,5 +142,9 @@ router
 			});
 		}
 	});
+
+router.put('/photos/:id', async (req, res) => {
+	res.send('photo update');
+});
 
 module.exports = router;

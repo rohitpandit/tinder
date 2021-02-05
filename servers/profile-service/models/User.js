@@ -26,7 +26,7 @@ const userSchema = mongoose.Schema({
 	country: {
 		type: String,
 	},
-	photos: [{ type: String }],
+	photosUrl: [{ type: String }],
 });
 
 module.exports = mongoose.model('User', userSchema);

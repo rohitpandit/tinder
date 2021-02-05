@@ -13,7 +13,6 @@ const Profile = () => {
 	const [zipcode, setZipcode] = useState('');
 	const [country, setCountry] = useState('');
 	const [avtars, setAvtars] = useState([]);
-	const [tempImages, setTempImages] = useState([]);
 	const [tempImage, setTempImage] = useState(null);
 
 	useEffect(() => {
@@ -21,11 +20,9 @@ const Profile = () => {
 		const getData = async () => {
 			const initialData = await axios.get('http://localhost:5000/user');
 			if (initialData.status !== 200) {
-				// console.log(initialData.msg);
 				return;
 			}
 
-			// console.log(initialData.data);
 			const data = initialData.data.user;
 			setFirstName(data.firstName);
 			setLastName(data.lastName);
@@ -52,7 +49,6 @@ const Profile = () => {
 			country === '' ||
 			zipcode === ''
 		) {
-			// console.log('Enter all the fields');
 			return;
 		}
 
@@ -67,7 +63,6 @@ const Profile = () => {
 		});
 
 		if (res.status !== 200) {
-			// console.log(res.msg);
 			return;
 		}
 
@@ -77,12 +72,35 @@ const Profile = () => {
 	const onUploadHandler = async (e) => {
 		e.preventDefault();
 
-		if (tempImages.length === 5) {
+		if (tempImage.length + avtars.length === 5) {
 			console.log('You can have 5 images at max');
 			return;
 		}
 
-		setTempImages([tempImage, ...tempImages]);
+		console.log(tempImage);
+		const formData = new FormData();
+		formData.append('newAvtar', tempImage);
+
+		const config = {
+			headers: {
+				'content-type': 'multipart/form-data',
+			},
+		};
+
+		const result = await axios.put(
+			'http://localhost:5000/user/photos',
+			formData,
+			config
+		);
+
+		if (result.status === 200) {
+			const newAvtars = [tempImage, ...avtars];
+			setAvtars(newAvtars);
+			return;
+		}
+
+		console.log('some error happended', result.msg);
+
 		return;
 	};
 
@@ -208,12 +226,16 @@ const Profile = () => {
 
 					{/* image */}
 					<div className='col-8'>
-						<form onSubmit={onUploadHandler} className='mb-2'>
+						<form
+							onSubmit={onUploadHandler}
+							className='mb-2'
+							encType='multipart/form-data'>
 							<div className='custom-file'>
 								<input
+									name='newAvtar'
 									type='file'
 									className='custom-file-input mb-10'
-									id='inputGroupFile01'
+									id='newAvtar'
 									onChange={(e) => setTempImage(e.target.files[0])}
 									required
 								/>

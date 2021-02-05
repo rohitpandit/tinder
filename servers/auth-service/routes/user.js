@@ -1,7 +1,10 @@
 const express = require('express');
 const axios = require('axios');
 const jwt = require('jsonwebtoken');
+const multer = require('multer');
 const router = express.Router();
+
+const upload = multer({ dest: 'upload/' });
 
 router
 	.route('/')
@@ -98,7 +101,9 @@ router
 				state,
 				zipcode,
 				country,
+				photos,
 			} = req.body;
+			console.log(req);
 			if (
 				!firstName ||
 				!lastName ||
@@ -115,6 +120,8 @@ router
 				});
 				return;
 			}
+
+			console.log(req);
 
 			//verify token
 			const decoded = jwt.verify(
@@ -135,6 +142,7 @@ router
 					state,
 					zipcode,
 					country,
+					photos,
 				}
 			);
 			console.log(result.data.user);
@@ -160,11 +168,34 @@ router
 			const result = await axios.delete(
 				`http://localhost:5001/user/${decoded.id}`
 			);
-
-			//TODO implement delete
 		} catch (error) {
 			res.status(500).json({ msg: error.message });
 		}
 	});
+
+//router for uploading a photo
+router.put('/photos', upload.single('newAvtar'), async (req, res) => {
+	try {
+		//verify token
+		const decoded = jwt.verify(req.headers.authorization.split(' ')[1], 'test');
+		if (decoded) {
+			console.log(decoded.id);
+		}
+
+		console.log(req.file);
+		const confit = {
+			headers: {
+				'content-type': 'multipart/form-data',
+			},
+		};
+		const result = await axios.put(
+			`http://localhost:5001/user/photos/${decoded.id}`,
+			req.file,
+			config
+		);
+
+		res.status(200).send('done');
+	} catch (error) {}
+});
 
 module.exports = router;
