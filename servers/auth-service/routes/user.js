@@ -3,8 +3,6 @@ const axios = require('axios');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const router = express.Router();
-const FormData = require('form-data');
-const getStream = require('get-stream');
 
 const upload = multer();
 
@@ -192,11 +190,6 @@ router.put('/photos', upload.single('newAvtar'), async (req, res) => {
 			},
 		};
 
-		// const form = new FormData();
-		// console.log(req.file);
-		// console.log('formdata');
-		// form.append('newAvtar', req.file);
-
 		const form = {
 			newAvtar: req.file,
 		};
@@ -204,7 +197,6 @@ router.put('/photos', upload.single('newAvtar'), async (req, res) => {
 		const result = await axios.put(
 			`http://localhost:5001/user/photos/${decoded.id}`,
 			form
-			// config
 		);
 
 		res.status(200).send('done');

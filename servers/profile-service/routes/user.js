@@ -1,8 +1,14 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const util = require('util');
 const User = require('../models/User');
 const multer = require('multer');
+
+//imposing async/await behaviour in our fs module
+const fs_readdir = util.promisify(fs.readdir);
+const fs_writeFile = util.promisify(fs.writeFile);
+const fs_mkdir = util.promisify(fs.mkdir);
 
 const upload = multer({
 	dest: `./upload`,
@@ -150,36 +156,38 @@ router
 
 //router for uploading photo
 router.put('/photos/:id', async (req, res) => {
-	const dir = `./upload/${req.params.id}/`;
+	try {
+		const { id } = req.params;
+		const user = User.findOne({ _id: id });
 
-	console.log(req.body);
-
-	if (fs.existsSync(`./upload/${req.params.id}`)) {
-		fs.readdir(`./upload/${req.params.id}`, (err, files) => {
-			if (err) {
-				console.log(err);
-			}
+		if (fs.existsSync(`./upload/${id}`)) {
+			const files = await fs_readdir(`./upload/${id}`);
 			const count = files.length;
 
-			fs.writeFile(
-				`./upload/${req.params.id}/${count}.jpeg`,
-				Buffer.from(req.body.newAvtar.buffer.data),
-				(err) => {
-					if (err) {
-						console.log(err);
-					}
-				}
+			const write = await fs_writeFile(
+				`./upload/${id}/${count}.jpeg`,
+				Buffer.from(req.body.newAvtar.buffer.data)
 			);
-		});
-	} else {
-		fs.mkdir(`./upload/${req.params.id}`, (err) => {
-			if (err) {
-				console.log(err);
-			}
+			console.log(write);
+		} else {
+			const dir = await fs_mkdir(`./upload/${req.params.id}`);
+
+			const count = 0;
+
+			const write = fs_writeFile(
+				`./upload/${req.params.id}/${count}.jpeg`,
+				Buffer.from(req.body.newAvtar.buffer.data)
+			);
+			console.log(write);
+		}
+
+		res.send('photo update');
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({
+			msg: error.stack,
 		});
 	}
-
-	res.send('photo update');
 });
 
 module.exports = router;
