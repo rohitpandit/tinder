@@ -27,7 +27,9 @@ router
 				}
 			);
 			console.log(result.data);
-			res.status(200).json({ user: result.data.user });
+			res
+				.status(200)
+				.json({ user: result.data.user, photos: result.data.photos });
 			return;
 		} catch (error) {
 			res.status(500).json({

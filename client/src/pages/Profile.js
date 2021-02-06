@@ -23,15 +23,27 @@ const Profile = () => {
 				return;
 			}
 
-			const data = initialData.data.user;
-			setFirstName(data.firstName);
-			setLastName(data.lastName);
-			setDob(data.dob.split('T')[0]);
-			setCity(data.city);
-			setState(data.state);
-			setZipcode(data.zipcode);
-			setCountry(data.country);
-			setAvtars(data.photos);
+			const { user, photos } = initialData.data;
+			setFirstName(user.firstName);
+			setLastName(user.lastName);
+			setDob(user.dob.split('T')[0]);
+			setCity(user.city);
+			setState(user.state);
+			setZipcode(user.zipcode);
+			setCountry(user.country);
+
+			let photoArray = [];
+			for (let i = 0; i < photos.length; i++) {
+				const arrayBufferView = new Uint8Array(photos[i].data);
+				const blob = new Blob([arrayBufferView], { type: 'image/jpeg' });
+				const urlCreator = window.URL || window.webkitURL;
+				const imageUrl = urlCreator.createObjectURL(blob);
+				console.log(imageUrl);
+
+				photoArray.unshift(imageUrl);
+			}
+
+			setAvtars(photoArray);
 		};
 
 		getData();
@@ -63,6 +75,7 @@ const Profile = () => {
 		});
 
 		if (res.status !== 200) {
+			window.location.reload();
 			return;
 		}
 
@@ -72,7 +85,7 @@ const Profile = () => {
 	const onUploadHandler = async (e) => {
 		e.preventDefault();
 
-		if (tempImage.length + avtars.length === 5) {
+		if (avtars.length >= 5) {
 			console.log('You can have 5 images at max');
 			return;
 		}
@@ -255,6 +268,7 @@ const Profile = () => {
 							<Image className=''>
 								{avtars.length >= 1 ? (
 									<img
+										id='test-img'
 										src={avtars[0]}
 										className='img-fluid overflow-none'
 										alt='Responsive '

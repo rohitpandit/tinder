@@ -9,6 +9,7 @@ const multer = require('multer');
 const fs_readdir = util.promisify(fs.readdir);
 const fs_writeFile = util.promisify(fs.writeFile);
 const fs_mkdir = util.promisify(fs.mkdir);
+const fs_readFile = util.promisify(fs.readFile);
 
 const upload = multer({
 	dest: `./upload`,
@@ -19,11 +20,22 @@ const router = express.Router();
 router
 	.route('/:id')
 	.get(async (req, res) => {
+		const { id } = req.params.id;
 		try {
-			const user = await User.findOne({ _id: req.params.id });
+			const { id } = req.params;
+			const user = await User.findOne({ _id: id });
 			console.log(user);
-			user.photos = [];
-			res.json({ user: user });
+
+			const photos = [];
+			for (let i = 0; i < user.photosUrl.length; i++) {
+				const temp = await fs_readFile(user.photosUrl[i]);
+				photos.unshift(temp);
+			}
+
+			console.log(user.photosUrl.length);
+			console.log(photos);
+
+			res.json({ user: user, photos: photos });
 		} catch (err) {
 			console.log(err.message);
 
