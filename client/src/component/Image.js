@@ -7,9 +7,9 @@ const Image = ({ ...props }) => {
 const style = {
 	width: '30%',
 	margin: '.5rem',
-	height: '15rem',
-	padding: '.5rem',
-	// border: '1px solid grey',
+	border: '1px solid grey',
+	objectFit: 'contain',
+	overflow: 'hidden',
 };
 
 export default Image;

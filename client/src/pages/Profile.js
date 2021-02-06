@@ -107,8 +107,7 @@ const Profile = () => {
 		);
 
 		if (result.status === 200) {
-			const newAvtars = [tempImage, ...avtars];
-			setAvtars(newAvtars);
+			window.location.reload();
 			return;
 		}
 
@@ -270,7 +269,7 @@ const Profile = () => {
 									<img
 										id='test-img'
 										src={avtars[0]}
-										className='img-fluid overflow-none'
+										className='img-fluid'
 										alt='Responsive '
 									/>
 								) : (
