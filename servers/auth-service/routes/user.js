@@ -207,4 +207,26 @@ router.put('/photos', upload.single('newAvtar'), async (req, res) => {
 	}
 });
 
+//route for deleting a photo
+router.delete('/photos/:count', async (req, res) => {
+	try {
+		//verify token
+		const decoded = jwt.verify(req.headers.authorization.split(' ')[1], 'test');
+		if (decoded) {
+			console.log(decoded.id);
+		}
+
+		const { count } = req.params;
+		const result = await axios.delete(
+			`http://localhost:5001/user/photos/${decoded.id}/${count}`
+		);
+		console.log(result.data);
+		console.log('in the auth service');
+		res.status(200).json({ msg: 'delete successful' });
+	} catch (error) {
+		console.log(error.stack);
+		res.status(500).json({ msg: error.msg });
+	}
+});
+
 module.exports = router;

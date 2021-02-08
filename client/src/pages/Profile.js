@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import Navbar from '../component/layout/Navbar';
 import Footer from '../component/layout/Footer';
@@ -108,10 +108,27 @@ const Profile = () => {
 
 		if (result.status === 200) {
 			window.location.reload();
+			setTempImage(null);
+			console.log(tempImage);
 			return;
 		}
 
 		console.log('some error happended', result.msg);
+
+		return;
+	};
+
+	const deleteImageHandler = async (count) => {
+		const result = await axios.delete(
+			`http://localhost:5000/user/photos/${count}`
+		);
+		console.log(result.data);
+		console.log('delte image');
+		if (result.status === 200) {
+			window.location.reload();
+			setTempImage(null);
+			console.log(tempImage);
+		}
 
 		return;
 	};
@@ -264,58 +281,95 @@ const Profile = () => {
 						<hr />
 						{avtars.length === 0 && <div>Upload some images</div>}
 						<div className='d-flex flex-wrap'>
-							<Image className=''>
+							<Image>
 								{avtars.length >= 1 ? (
-									<img
-										id='test-img'
-										src={avtars[0]}
-										className='img-fluid'
-										alt='Responsive '
-									/>
+									<Fragment>
+										<i
+											className='far fa-window-close text-danger   m-2  float-right'
+											style={{}}
+											onClick={() => deleteImageHandler(0)}
+										/>
+										<img
+											id='test-img'
+											src={avtars[0]}
+											className='img-fluid'
+											alt='Responsive '
+										/>
+									</Fragment>
 								) : (
 									<></>
 								)}
 							</Image>
 							<Image className=''>
 								{avtars.length >= 2 ? (
-									<img
-										src={avtars[1]}
-										className='img-fluid '
-										alt='Responsive '
-									/>
+									<Fragment>
+										<i
+											className='far fa-window-close text-danger   m-2  float-right'
+											style={{}}
+											onClick={() => deleteImageHandler(1)}
+										/>
+
+										<img
+											src={avtars[1]}
+											className='img-fluid '
+											alt='Responsive '
+										/>
+									</Fragment>
 								) : (
 									<></>
 								)}
 							</Image>
 							<Image className=''>
 								{avtars.length >= 3 ? (
-									<img
-										src={avtars[2]}
-										className='img-fluid '
-										alt='Responsive '
-									/>
+									<Fragment>
+										<i
+											className='far fa-window-close text-danger   m-2  float-right'
+											style={{}}
+											onClick={() => deleteImageHandler(2)}
+										/>
+
+										<img
+											src={avtars[2]}
+											className='img-fluid '
+											alt='Responsive '
+										/>
+									</Fragment>
 								) : (
 									<></>
 								)}
 							</Image>
 							<Image className=''>
 								{avtars.length >= 4 ? (
-									<img
-										src={avtars[3]}
-										className='img-fluid '
-										alt='Responsive '
-									/>
+									<Fragment>
+										<i
+											className='far fa-window-close text-danger   m-2  float-right'
+											style={{}}
+											onClick={() => deleteImageHandler(3)}
+										/>
+										<img
+											src={avtars[3]}
+											className='img-fluid '
+											alt='Responsive '
+										/>
+									</Fragment>
 								) : (
 									<></>
 								)}
 							</Image>
 							<Image className=''>
 								{avtars.length >= 5 ? (
-									<img
-										src={avtars[4]}
-										className='img-fluid '
-										alt='Responsive '
-									/>
+									<Fragment>
+										<i
+											className='far fa-window-close text-danger   m-2  float-right'
+											style={{}}
+											onClick={() => deleteImageHandler(4)}
+										/>
+										<img
+											src={avtars[4]}
+											className='img-fluid '
+											alt='Responsive '
+										/>
+									</Fragment>
 								) : (
 									<></>
 								)}

@@ -10,6 +10,8 @@ const fs_readdir = util.promisify(fs.readdir);
 const fs_writeFile = util.promisify(fs.writeFile);
 const fs_mkdir = util.promisify(fs.mkdir);
 const fs_readFile = util.promisify(fs.readFile);
+const fs_unlink = util.promisify(fs.unlinkSync);
+const fs_rename = util.promisify(fs.rename);
 
 const upload = multer({
 	dest: `./upload`,
@@ -222,6 +224,34 @@ router.put('/photos/:id', async (req, res) => {
 		res.status(500).json({
 			msg: error.stack,
 		});
+	}
+});
+
+//route for deleting a photo from the db and the server
+router.delete('/photos/:id/:count', async (req, res) => {
+	try {
+		const { count, id } = req.params;
+
+		//remaning the files
+		// await fs_unlink(`./upload/${id}/${count}.jpeg`);
+		const files = await fs_readdir(`./upload/${id}`);
+
+		for (let i = 0; i < files.length; i++) {
+			await fs_rename(`./upload/${id}/${files[i]}`, `./upload/${id}/${i}.jpeg`);
+			console.log(`./upload/${id}/${files[i]}`);
+		}
+
+		//updating the complete user.photosUrl
+
+		// const user = await User.findById({ _id: id });
+		// user.photosUrl.filter((value) => value);
+		// console.log(user.photosUrl);
+
+		// await user.save();
+		res.status(200).send({ msg: 'photo deleted' });
+	} catch (error) {
+		console.log(error.stack);
+		res.status(500).json({ msg: error.message });
 	}
 });
 
