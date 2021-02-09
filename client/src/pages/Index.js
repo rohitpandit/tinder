@@ -9,7 +9,7 @@ const Index = () => {
 			<main className='container' style={{ height: '100vh' }}>
 				<div className='d-flex m-2 justify-content-center align-items-center '>
 					<div className=''>
-						<i class='fas fa-chevron-left'></i>
+						<i className='fas fa-chevron-left'></i>
 					</div>
 					<div
 						className='card pl-6 pr-6 border position-relative'
@@ -36,7 +36,7 @@ const Index = () => {
 						</div>
 					</div>
 					<div className=''>
-						<i class='fas fa-chevron-right'></i>
+						<i className='fas fa-chevron-right'></i>
 					</div>
 				</div>
 			</main>

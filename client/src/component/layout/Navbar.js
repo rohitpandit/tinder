@@ -1,7 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ history }) => {
+	const logoutHandler = (e) => {
+		e.preventDefault();
+		// localStorage.removeItem('token');
+		// history.push('/login');
+		// history.push('/');
+
+		console.log('logout');
+	};
+
 	return (
 		<nav className='navbar navbar-expand-lg navbar-light bg-light'>
 			<div className='container-fluid'>
@@ -36,9 +45,9 @@ const Navbar = () => {
 							</Link>
 						</li>
 						<li className='nav-item'>
-							<form action='/logout' method='POST'>
+							<form onSubmit={logoutHandler}>
 								<button type='submit'>
-									<Link className='nav-link' to='/'>
+									<Link className='nav-link btn' to='/'>
 										Logout
 									</Link>
 								</button>

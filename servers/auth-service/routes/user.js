@@ -16,8 +16,9 @@ router
 				req.headers.authorization.split(' ')[1],
 				'test'
 			);
-			if (decoded) {
-				console.log(decoded.id);
+			if (decoded === null) {
+				res.status(401).json({ msg: 'User is not authorized' });
+				return;
 			}
 			console.log('in the get user ');
 			const result = await axios.get(
@@ -68,10 +69,10 @@ router
 				req.headers.authorization.split(' ')[1],
 				'test'
 			);
-			if (decoded) {
-				console.log(decoded.id);
+			if (decoded === null) {
+				res.status(401).json({ msg: 'User is not authorized' });
+				return;
 			}
-
 			const result = await axios.post(
 				`http://localhost:5001/user/${decoded.id}`,
 				{
@@ -130,10 +131,10 @@ router
 				req.headers.authorization.split(' ')[1],
 				'test'
 			);
-			if (decoded) {
-				console.log(decoded.id);
+			if (decoded === null) {
+				res.status(401).json({ msg: 'User is not authorized' });
+				return;
 			}
-
 			const result = await axios.put(
 				`http://localhost:5001/user/${decoded.id}`,
 				{
@@ -162,10 +163,10 @@ router
 				req.headers.authorization.split(' ')[1],
 				'test'
 			);
-			if (decoded) {
-				console.log(decoded.id);
+			if (decoded === null) {
+				res.status(401).json({ msg: 'User is not authorized' });
+				return;
 			}
-
 			const result = await axios.delete(
 				`http://localhost:5001/user/${decoded.id}`
 			);
@@ -179,10 +180,10 @@ router.put('/photos', upload.single('newAvtar'), async (req, res) => {
 	try {
 		//verify token
 		const decoded = jwt.verify(req.headers.authorization.split(' ')[1], 'test');
-		if (decoded) {
-			console.log(decoded.id);
+		if (decoded === null) {
+			res.status(401).json({ msg: 'User is not authorized' });
+			return;
 		}
-
 		const buffer = req.file.buffer;
 		console.log(req.file);
 
@@ -212,10 +213,10 @@ router.delete('/photos/:count', async (req, res) => {
 	try {
 		//verify token
 		const decoded = jwt.verify(req.headers.authorization.split(' ')[1], 'test');
-		if (decoded) {
-			console.log(decoded.id);
+		if (decoded === null) {
+			res.status(401).json({ msg: 'User is not authorized' });
+			return;
 		}
-
 		const { count } = req.params;
 		const result = await axios.delete(
 			`http://localhost:5001/user/photos/${decoded.id}/${count}`
@@ -227,6 +228,11 @@ router.delete('/photos/:count', async (req, res) => {
 		console.log(error.stack);
 		res.status(500).json({ msg: error.msg });
 	}
+});
+
+//Lougout route
+router.post('/logout', async (req, res) => {
+	console.log('logout');
 });
 
 module.exports = router;
