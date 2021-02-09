@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import {
 	BrowserRouter as Router,
 	Route,
@@ -21,8 +21,7 @@ axios.defaults.headers.common = {
 };
 
 function App() {
-	const isLogged = localStorage.getItem('token');
-	console.log(isLogged);
+	const [isLogged, setIsLogged] = useState(localStorage.getItem('token'));
 
 	return (
 		<Fragment>
@@ -34,19 +33,25 @@ function App() {
 					<Route exact path='/match'>
 						{isLogged !== null ? <Match /> : <Redirect from='/' to='/login' />}
 					</Route>
-					<Route exact path='/profile' component={Profile}>
+					<Route exact path='/profile'>
 						{isLogged !== null ? (
 							<Profile />
 						) : (
 							<Redirect from='/' to='/login' />
 						)}
 					</Route>
-					<Route exact path='/chat/:id' component={Chat}>
+					<Route exact path='/chat/:id'>
 						{isLogged !== null ? <Chat /> : <Redirect from='/' to='/login' />}
 					</Route>
-					<Route exact path='/login' component={Login} />
-					<Route exact path='/signup' component={Signup}></Route>
-					<Route path='*' component={PageNotFound} />
+					<Route exact path='/login'>
+						<Login />
+					</Route>
+					<Route exact path='/signup'>
+						<Signup />
+					</Route>
+					<Route path='*'>
+						<PageNotFound />
+					</Route>
 				</Switch>
 			</Router>
 		</Fragment>
