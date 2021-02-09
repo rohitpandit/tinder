@@ -1,12 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
-const Navbar = ({ history }) => {
+const Navbar = () => {
+	const history = useHistory();
+
 	const logoutHandler = (e) => {
 		e.preventDefault();
-		// localStorage.removeItem('token');
-		// history.push('/login');
-		// history.push('/');
+		console.log('logout 1');
+		localStorage.removeItem('token');
+		history.push('/login');
 
 		console.log('logout');
 	};
@@ -46,10 +48,8 @@ const Navbar = ({ history }) => {
 						</li>
 						<li className='nav-item'>
 							<form onSubmit={logoutHandler}>
-								<button type='submit'>
-									<Link className='nav-link btn' to='/'>
-										Logout
-									</Link>
+								<button className='btn btn-primary' type='submit'>
+									Logout
 								</button>
 							</form>
 						</li>
