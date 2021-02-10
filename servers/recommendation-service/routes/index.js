@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
 		res.status(200).json({ data: result.data });
 	} catch (error) {
 		console.log(error.stack);
-		res.status(500).json({ msg: error.stack });
+		res.status(500).json({ error: error.message });
 	}
 });
 

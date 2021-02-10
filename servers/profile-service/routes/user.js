@@ -38,11 +38,11 @@ router
 			console.log(photos);
 
 			res.json({ user: user, photos: photos });
-		} catch (err) {
-			console.log(err.message);
+		} catch (error) {
+			console.log(error.message);
 
 			res.status(500).json({
-				msg: err.message,
+				error: error.message,
 			});
 		}
 	})
@@ -89,11 +89,11 @@ router
 			console.log('added');
 
 			res.status(201).json({ user: newuser });
-		} catch (err) {
-			console.log(err.message);
+		} catch (error) {
+			console.log(error.message);
 
 			res.status(500).json({
-				msg: err.message,
+				error: error.message,
 			});
 		}
 	})
@@ -144,11 +144,11 @@ router
 				await newUser.save();
 				res.status(200).json({ user: newUser });
 			}
-		} catch (err) {
-			console.log(err.message);
+		} catch (error) {
+			console.log(error.message);
 
 			res.status(500).json({
-				msg: err.message,
+				error: error.message,
 			});
 		}
 	})
@@ -163,7 +163,7 @@ router
 		} catch (error) {
 			console.log(error.message);
 			res.status(500).json({
-				msg: err.message,
+				error: error.message,
 			});
 		}
 	});
@@ -222,7 +222,7 @@ router.put('/photos/:id', async (req, res) => {
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({
-			msg: error.stack,
+			error: error.message,
 		});
 	}
 });
@@ -257,7 +257,7 @@ router.delete('/photos/:id/:count', async (req, res) => {
 		res.status(200).send({ msg: 'photo deleted' });
 	} catch (error) {
 		console.log(error.stack);
-		res.status(500).json({ msg: error.message });
+		res.status(500).json({ error: error.message });
 	}
 });
 

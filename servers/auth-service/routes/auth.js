@@ -37,7 +37,7 @@ router.post('/login', async (req, res) => {
 		});
 	} catch (error) {
 		res.status(500).json({
-			msg: error.message,
+			error: error.message,
 		});
 	}
 });
@@ -80,7 +80,7 @@ router.post('/signup', async (req, res) => {
 		res.status(201).json({ user: newUser, token });
 	} catch (error) {
 		res.status(400).json({
-			msg: error.message,
+			error: error.message,
 		});
 	}
 });

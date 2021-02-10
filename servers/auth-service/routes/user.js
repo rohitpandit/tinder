@@ -34,7 +34,7 @@ router
 			return;
 		} catch (error) {
 			res.status(500).json({
-				msg: error.message,
+				error: error.message,
 			});
 		}
 	})
@@ -90,7 +90,7 @@ router
 			return;
 		} catch (error) {
 			res.status(500).json({
-				msg: error.message,
+				error: error.message,
 			});
 		}
 	})
@@ -152,7 +152,7 @@ router
 			return;
 		} catch (error) {
 			res.status(500).json({
-				msg: error.message,
+				error: error.message,
 			});
 		}
 	})
@@ -171,7 +171,7 @@ router
 				`http://localhost:5001/user/${decoded.id}`
 			);
 		} catch (error) {
-			res.status(500).json({ msg: error.message });
+			res.status(500).json({ error: error.message });
 		}
 	});
 
@@ -204,7 +204,7 @@ router.put('/photos', upload.single('newAvtar'), async (req, res) => {
 
 		res.status(200).send('done');
 	} catch (error) {
-		res.status(500).json({ msg: error.stack });
+		res.status(500).json({ error: error.stack });
 	}
 });
 
@@ -226,13 +226,8 @@ router.delete('/photos/:count', async (req, res) => {
 		res.status(200).json({ msg: 'delete successful' });
 	} catch (error) {
 		console.log(error.stack);
-		res.status(500).json({ msg: error.msg });
+		res.status(500).json({ error: error.msg });
 	}
-});
-
-//Lougout route
-router.post('/logout', async (req, res) => {
-	console.log('logout');
 });
 
 module.exports = router;
