@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import Loading from '../component/Loading';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = ({ setIsLogged, history }) => {
 	const [email, setEmail] = useState('');
@@ -9,29 +11,34 @@ const Login = ({ setIsLogged, history }) => {
 	const [loading, setLoading] = useState(false);
 
 	const onSubmitHandler = async (e) => {
-		e.preventDefault();
-		setLoading(true);
-		const res = await axios.post('http://localhost:5000/auth/login', {
-			email,
-			password,
-		});
+		try {
+			e.preventDefault();
+			setLoading(true);
+			const res = await axios.post('http://localhost:5000/auth/login', {
+				email,
+				password,
+			});
 
-		setLoading(false);
+			const { token } = res.data;
+			setLoading(false);
 
-		console.log(res.data.token);
+			console.log(token);
 
-		if (res.status === 200) {
-			localStorage.setItem('token', res.data.token);
-			setIsLogged(res.data.token);
-			console.log(history.location);
-			history.push('/');
-			window.location.reload();
-			console.log(history.location);
+			if (res.status === 200) {
+				localStorage.setItem('token', token);
+				setIsLogged(token);
+				history.push('/');
+				window.location.reload();
+			}
+		} catch (error) {
+			setLoading(false);
+			toast.error(error.response.data.error);
 		}
 	};
 
 	return (
 		<div style={parent}>
+			<ToastContainer />
 			{loading ? (
 				<Loading />
 			) : (

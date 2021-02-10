@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import Loading from '../component/Loading';
 
 const Signup = ({ history, setIsLogged }) => {
@@ -10,35 +11,49 @@ const Signup = ({ history, setIsLogged }) => {
 	const [loading, setLoading] = useState(false);
 
 	const onSubmitHandler = async (e) => {
-		e.preventDefault();
-		setLoading(true);
-
-		if (password === confirmPassword) {
+		try {
+			e.preventDefault();
 			setLoading(true);
-			const res = await axios.post('http://localhost:5000/auth/signup', {
-				email,
-				password,
-			});
 
-			setLoading(false);
-
-			if (res.status !== 201) {
-				console.log(res.msg);
-				return;
+			if (password !== confirmPassword) {
+				toast.error('Passwords did not match');
+				loading(false);
+				// return;
 			}
-			console.log(res.data.token);
 
-			localStorage.setItem('token', res.data.token);
-			setIsLogged(res.data.token);
+			if (password === confirmPassword) {
+				setLoading(true);
+				const res = await axios.post('http://localhost:5000/auth/signup', {
+					email,
+					password,
+				});
+
+				setLoading(false);
+
+				if (res.status !== 201) {
+					console.log(res.msg);
+					return;
+				}
+				console.log(res.data.token);
+
+				localStorage.setItem('token', res.data.token);
+				setIsLogged(res.data.token);
+				setLoading(false);
+				console.log(history.location);
+				history.push('/profile');
+				window.location.reload();
+			}
+		} catch (error) {
 			setLoading(false);
-			console.log(history.location);
-			history.push('/profile');
-			window.location.reload();
+			if (error.response) {
+				toast.error(error.response.data.error);
+			}
 		}
 	};
 
 	return (
 		<div style={parent}>
+			<ToastContainer />
 			{loading ? (
 				<Loading />
 			) : (

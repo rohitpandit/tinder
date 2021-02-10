@@ -16,6 +16,7 @@ import Profile from './pages/Profile';
 import PageNotFound from './pages/PageNotFound';
 import './bootstrap.min.css';
 import './app.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 	const [isLogged, setIsLogged] = useState(localStorage.getItem('token'));

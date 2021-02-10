@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 import Navbar from '../component/layout/Navbar';
 import Footer from '../component/layout/Footer';
 import Image from '../component/Image';
@@ -85,97 +86,93 @@ const Profile = ({ setIsLogged }) => {
 
 	//Form submit for the user information
 	const onSubmitHandler = async (e) => {
-		e.preventDefault();
-		if (
-			firstName === '' ||
-			lastName === '' ||
-			dob === '' ||
-			state === '' ||
-			city === '' ||
-			country === '' ||
-			zipcode === ''
-		) {
-			return;
+		try {
+			e.preventDefault();
+			if (
+				firstName === '' ||
+				lastName === '' ||
+				dob === '' ||
+				state === '' ||
+				city === '' ||
+				country === '' ||
+				zipcode === ''
+			) {
+				return;
+			}
+
+			setFormLoading(true);
+			const res = await axios.put('http://localhost:5000/user', {
+				firstName,
+				lastName,
+				dob,
+				state,
+				city,
+				country,
+				zipcode,
+			});
+			setFormLoading(false);
+			toast.success('Update successful');
+
+			console.log('saved successfully');
+		} catch (error) {
+			setFormLoading(false);
+			toast.error(error.response.data.error);
 		}
-
-		setFormLoading(true);
-		const res = await axios.put('http://localhost:5000/user', {
-			firstName,
-			lastName,
-			dob,
-			state,
-			city,
-			country,
-			zipcode,
-		});
-		setFormLoading(false);
-
-		if (res.status !== 200) {
-			window.location.reload();
-			return;
-		}
-
-		console.log('saved successfully');
 	};
 
 	const onUploadHandler = async (e) => {
-		e.preventDefault();
+		try {
+			e.preventDefault();
 
-		if (avtars.length >= 5) {
-			console.log('You can have 5 images at max');
-			return;
-		}
+			if (avtars.length >= 5) {
+				toast.info('You can have 5 images at max');
+				return;
+			}
 
-		console.log(tempImage);
-		const formData = new FormData();
-		formData.append('newAvtar', tempImage);
-
-		const config = {
-			headers: {
-				'content-type': 'multipart/form-data',
-			},
-		};
-
-		setImageLoading(true);
-		const result = await axios.put(
-			'http://localhost:5000/user/photos',
-			formData,
-			config
-		);
-		setImageLoading(false);
-
-		if (result.status === 200) {
-			window.location.reload();
-			setTempImage(null);
 			console.log(tempImage);
-			return;
+			const formData = new FormData();
+			formData.append('newAvtar', tempImage);
+
+			const config = {
+				headers: {
+					'content-type': 'multipart/form-data',
+				},
+			};
+
+			setImageLoading(true);
+			const result = await axios.put(
+				'http://localhost:5000/user/photos',
+				formData,
+				config
+			);
+			setImageLoading(false);
+			setTempImage(null);
+			window.location.reload();
+		} catch (error) {
+			setImageLoading(false);
+			toast.error(error.response.data.error);
 		}
-
-		console.log('some error happended', result.msg);
-
-		return;
 	};
 
 	const deleteImageHandler = async (count) => {
-		setImageLoading(true);
-		const result = await axios.delete(
-			`http://localhost:5000/user/photos/${count}`
-		);
-		setImageLoading(false);
-		console.log(result.data);
-		console.log('delte image');
-		if (result.status === 200) {
-			window.location.reload();
+		try {
+			setImageLoading(true);
+			const result = await axios.delete(
+				`http://localhost:5000/user/photos/${count}`
+			);
+			setImageLoading(false);
 			setTempImage(null);
-			console.log(tempImage);
+			window.location.reload();
+		} catch (error) {
+			setImageLoading(false);
+			toast.error(error.response.data.error);
 		}
-
-		return;
 	};
 
 	return (
 		<div>
 			<Navbar setIsLogged={setIsLogged} />
+			<ToastContainer />
 			<div className='container mb-5 mt-2'>
 				<h1>Profile</h1>
 				<hr />

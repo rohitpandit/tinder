@@ -10,7 +10,7 @@ router.post('/login', async (req, res) => {
 		const { email, password } = req.body;
 		if (!email || !password) {
 			res.status(400).json({
-				msg: 'Enter email and password',
+				error: 'Enter email and password',
 			});
 			return;
 		}
@@ -18,7 +18,7 @@ router.post('/login', async (req, res) => {
 		const user = await Auth.findOne({ email });
 		if (!user) {
 			res.status(400).json({
-				msg: 'Email or password is incorrect',
+				error: 'Email or password is incorrect',
 			});
 			return;
 		}
@@ -26,7 +26,7 @@ router.post('/login', async (req, res) => {
 		const match = await bcrypt.compare(password, user.password);
 		if (!match) {
 			res.status(400).json({
-				msg: 'Email or password is incorrect',
+				error: 'Email or password is incorrect',
 			});
 			return;
 		}
@@ -48,7 +48,7 @@ router.post('/signup', async (req, res) => {
 
 		if (!email || !password) {
 			res.status(400).json({
-				msg: 'Enter email and password',
+				error: 'Enter email and password',
 			});
 			return;
 		}
@@ -56,7 +56,7 @@ router.post('/signup', async (req, res) => {
 		const existUser = await Auth.findOne({ email });
 		if (existUser !== null) {
 			res.status(400).json({
-				msg: 'Email already exists',
+				error: 'Email already exists',
 			});
 			return;
 		}
