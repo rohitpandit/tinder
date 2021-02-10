@@ -37,9 +37,7 @@ const Signup = ({ history, setIsLogged }) => {
 		}
 	};
 
-	return loading === true ? (
-		<Loading />
-	) : (
+	return (
 		<div style={parent}>
 			{loading ? (
 				<Loading />
