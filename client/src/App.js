@@ -31,48 +31,52 @@ function App() {
 				<Switch>
 					<Route exact path='/'>
 						{isLogged !== null ? (
-							<Index setIsLogged={setIsLogged} />
+							<Index history={history} setIsLogged={setIsLogged} />
 						) : (
 							<Redirect from='/' to='/login' />
 						)}
 					</Route>
 					<Route exact path='/match'>
 						{isLogged !== null ? (
-							<Match setIsLogged={setIsLogged} />
+							<Match history={history} setIsLogged={setIsLogged} />
 						) : (
-							<Redirect from='/' to='/login' />
+							<Redirect from='/match' to='/login' />
 						)}
 					</Route>
 					<Route exact path='/profile'>
 						{isLogged !== null ? (
-							<Profile setIsLogged={setIsLogged} />
+							<Profile history={history} setIsLogged={setIsLogged} />
 						) : (
-							<Redirect from='/' to='/login' />
+							<Redirect from='/profile' to='/login' />
 						)}
 					</Route>
 					<Route exact path='/chat/:id'>
 						{isLogged !== null ? (
-							<Chat setIsLogged={setIsLogged} />
+							<Chat history={history} setIsLogged={setIsLogged} />
 						) : (
-							<Redirect from='/' to='/login' />
+							<Redirect from='/chat/:id' to='/login' />
 						)}
 					</Route>
 					<Route exact path='/login'>
 						{isLogged === null ? (
-							<Login setIsLogged={setIsLogged} />
+							<Login history={history} setIsLogged={setIsLogged} />
 						) : (
 							<Redirect from='/login' to='/' />
 						)}
 					</Route>
 					<Route exact path='/signup'>
 						{isLogged === null ? (
-							<Signup setIsLogged={setIsLogged} />
+							<Signup history={history} setIsLogged={setIsLogged} />
 						) : (
-							<Redirect from='/login' to='/' />
+							<Redirect from='/signup' to='/' />
 						)}
 					</Route>
 					<Route path='*'>
-						<PageNotFound setIsLogged={setIsLogged} />
+						{isLogged !== null ? (
+							<PageNotFound history={history} setIsLogged={setIsLogged} />
+						) : (
+							<Redirect from='/chat/:id' to='/login' />
+						)}
 					</Route>
 				</Switch>
 			</Router>

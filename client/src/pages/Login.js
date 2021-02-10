@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import history from '../uitls/history';
+import Loading from '../component/Loading';
 
-const Login = ({ setIsLogged }) => {
+const Login = ({ setIsLogged, history }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [loading, setLoading] = useState(false);
 
 	const onSubmitHandler = async (e) => {
 		e.preventDefault();
+		setLoading(true);
 		const res = await axios.post('http://localhost:5000/auth/login', {
 			email,
 			password,
 		});
+
+		setLoading(false);
 
 		console.log(res.data.token);
 
@@ -21,50 +25,56 @@ const Login = ({ setIsLogged }) => {
 			setIsLogged(res.data.token);
 			console.log(history.location);
 			history.push('/');
+			window.location.reload();
 			console.log(history.location);
 		}
 	};
 
 	return (
 		<div style={parent}>
-			<div style={box}>
-				<form style={style} onSubmit={onSubmitHandler}>
-					<h1 className='text-center'>Login</h1>
-					<hr />
-					<div className='mb-3'>
-						<label htmlFor='email'>Email address</label>
-						<input
-							type='email'
-							className='form-control'
-							id='email'
-							aria-describedby='emailHelp'
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-							required
-						/>
-					</div>
-					<div className='mb-3'>
-						<label htmlFor='password' className='form-label'>
-							Password
-						</label>
-						<input
-							type='password'
-							className='form-control'
-							id='password'
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-							minLength='5'
-							required
-						/>
-					</div>
-					<button type='submit' className='btn btn-primary btn-block'>
-						Login
-					</button>
-				</form>
-				<h6 className='text-center'>
-					New User? <Link to='/signup'>Signup</Link>
-				</h6>
-			</div>
+			{loading ? (
+				<Loading />
+			) : (
+				<div style={box}>
+					<form style={style} onSubmit={onSubmitHandler}>
+						<h1 className='text-center'>Login</h1>
+						<hr />
+						<div className='mb-3'>
+							<label htmlFor='email'>Email address</label>
+							<input
+								type='email'
+								className='form-control'
+								id='email'
+								aria-describedby='emailHelp'
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+								required
+							/>
+						</div>
+						<div className='mb-3'>
+							<label htmlFor='password' className='form-label'>
+								Password
+							</label>
+							<input
+								type='password'
+								className='form-control'
+								id='password'
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+								minLength='5'
+								required
+							/>
+						</div>
+						<button type='submit' className='btn btn-primary btn-block'>
+							Login
+						</button>
+					</form>
+
+					<h6 className='text-center'>
+						New User? <Link to='/signup'>Signup</Link>
+					</h6>
+				</div>
+			)}
 		</div>
 	);
 };

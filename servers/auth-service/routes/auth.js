@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const Auth = require('../models/Auth');
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
 
 router.post('/login', async (req, res) => {
 	try {
@@ -68,6 +69,11 @@ router.post('/signup', async (req, res) => {
 		});
 
 		await newUser.save();
+
+		//creating an empty value for the user in profile service
+		const userProfile = await axios.put(
+			`http://localhost:5001/user/${newUser._id}`
+		);
 
 		const token = jwt.sign({ id: newUser._id }, 'test');
 
