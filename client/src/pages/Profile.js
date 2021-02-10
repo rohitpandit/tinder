@@ -4,7 +4,7 @@ import Navbar from '../component/layout/Navbar';
 import Footer from '../component/layout/Footer';
 import Image from '../component/Image';
 
-const Profile = () => {
+const Profile = ({ setIsLogged }) => {
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
 	const [dob, setDob] = useState('');
@@ -22,6 +22,8 @@ const Profile = () => {
 			if (initialData.status !== 200) {
 				return;
 			}
+
+			console.log('shi');
 
 			const { user, photos } = initialData.data;
 			setFirstName(user.firstName);
@@ -44,6 +46,11 @@ const Profile = () => {
 			}
 
 			setAvtars(photoArray);
+
+			//clean-up code
+			return function cleanup() {
+				URL.revokeObjectURL(photoArray);
+			};
 		};
 
 		getData();
@@ -135,7 +142,7 @@ const Profile = () => {
 
 	return (
 		<div>
-			<Navbar />
+			<Navbar setIsLogged={setIsLogged} />
 			<div className='container mb-5 mt-2'>
 				<h1>Profile</h1>
 				<hr />

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 
-const Signup = () => {
+const Signup = ({ setIsLogged }) => {
 	const history = useHistory();
 
 	const [email, setEmail] = useState('');
@@ -25,6 +25,7 @@ const Signup = () => {
 			console.log(res.data.token);
 
 			localStorage.setItem('token', res.data.token);
+			setIsLogged(res.data.token);
 			history.push('/profile');
 		}
 	};

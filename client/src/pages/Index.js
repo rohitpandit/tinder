@@ -3,10 +3,10 @@ import Footer from '../component/layout/Footer';
 import Navbar from '../component/layout/Navbar';
 import Loading from '../component/Loading';
 
-const Index = () => {
+const Index = ({ setIsLogged }) => {
 	return (
 		<Fragment>
-			<Navbar />
+			<Navbar setIsLogged={setIsLogged} />
 			<main className='container' style={{ height: '100vh' }}>
 				<div className='d-flex m-2 justify-content-center align-items-center '>
 					<div className=''>

@@ -5,6 +5,7 @@ import {
 	Switch,
 	Redirect,
 } from 'react-router-dom';
+import history from './uitls/history';
 import axios from 'axios';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -16,41 +17,62 @@ import PageNotFound from './pages/PageNotFound';
 import './bootstrap.min.css';
 import './app.css';
 
-axios.defaults.headers.common = {
-	Authorization: `Bearer ${localStorage.getItem('token')}`,
-};
-
 function App() {
 	const [isLogged, setIsLogged] = useState(localStorage.getItem('token'));
 
+	axios.defaults.headers.common = {
+		// Authorization: `Bearer ${localStorage.getItem('token')}`,
+		Authorization: `Bearer ${isLogged}`,
+	};
+
 	return (
 		<Fragment>
-			<Router>
+			<Router history={history}>
 				<Switch>
 					<Route exact path='/'>
-						{isLogged !== null ? <Index /> : <Redirect from='/' to='/login' />}
+						{isLogged !== null ? (
+							<Index setIsLogged={setIsLogged} />
+						) : (
+							<Redirect from='/' to='/login' />
+						)}
 					</Route>
 					<Route exact path='/match'>
-						{isLogged !== null ? <Match /> : <Redirect from='/' to='/login' />}
+						{isLogged !== null ? (
+							<Match setIsLogged={setIsLogged} />
+						) : (
+							<Redirect from='/' to='/login' />
+						)}
 					</Route>
 					<Route exact path='/profile'>
 						{isLogged !== null ? (
-							<Profile />
+							<Profile setIsLogged={setIsLogged} />
 						) : (
 							<Redirect from='/' to='/login' />
 						)}
 					</Route>
 					<Route exact path='/chat/:id'>
-						{isLogged !== null ? <Chat /> : <Redirect from='/' to='/login' />}
+						{isLogged !== null ? (
+							<Chat setIsLogged={setIsLogged} />
+						) : (
+							<Redirect from='/' to='/login' />
+						)}
 					</Route>
 					<Route exact path='/login'>
-						<Login />
+						{isLogged === null ? (
+							<Login setIsLogged={setIsLogged} />
+						) : (
+							<Redirect from='/login' to='/' />
+						)}
 					</Route>
 					<Route exact path='/signup'>
-						<Signup />
+						{isLogged === null ? (
+							<Signup setIsLogged={setIsLogged} />
+						) : (
+							<Redirect from='/login' to='/' />
+						)}
 					</Route>
 					<Route path='*'>
-						<PageNotFound />
+						<PageNotFound setIsLogged={setIsLogged} />
 					</Route>
 				</Switch>
 			</Router>

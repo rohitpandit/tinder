@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import history from '../uitls/history';
 
-const Login = () => {
-	const history = useHistory();
-
+const Login = ({ setIsLogged }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -19,7 +18,10 @@ const Login = () => {
 
 		if (res.status === 200) {
 			localStorage.setItem('token', res.data.token);
+			setIsLogged(res.data.token);
+			console.log(history.location);
 			history.push('/');
+			console.log(history.location);
 		}
 	};
 
