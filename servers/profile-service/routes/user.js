@@ -4,6 +4,7 @@ const path = require('path');
 const util = require('util');
 const User = require('../models/User');
 const multer = require('multer');
+const { use } = require('../../auth-service/routes/user');
 
 //imposing async/await behaviour in our fs module
 const fs_readdir = util.promisify(fs.readdir);
@@ -52,6 +53,7 @@ router
 				firstName,
 				lastName,
 				dob,
+				gender,
 				city,
 				state,
 				zipcode,
@@ -61,6 +63,7 @@ router
 				!firstName ||
 				!lastName ||
 				!dob ||
+				!gender ||
 				!city ||
 				!state ||
 				!zipcode ||
@@ -78,6 +81,7 @@ router
 				firstName,
 				lastName,
 				dob,
+				gender,
 				city,
 				state,
 				zipcode,
@@ -103,6 +107,7 @@ router
 				firstName,
 				lastName,
 				dob,
+				gender,
 				city,
 				state,
 				zipcode,
@@ -119,6 +124,7 @@ router
 				user.firstName = firstName;
 				user.lastName = lastName;
 				user.dob = dob;
+				user.gender = gender;
 				user.city = city;
 				user.state = state;
 				user.country = country;
@@ -136,6 +142,7 @@ router
 					firstName,
 					lastName,
 					dob,
+					gender,
 					city,
 					state,
 					country,

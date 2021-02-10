@@ -44,6 +44,7 @@ router
 				firstName,
 				lastName,
 				dob,
+				gender,
 				city,
 				state,
 				zipcode,
@@ -53,6 +54,7 @@ router
 				!firstName ||
 				!lastName ||
 				!dob ||
+				!gender ||
 				!city ||
 				!state ||
 				!zipcode ||
@@ -79,6 +81,7 @@ router
 					firstName,
 					lastName,
 					dob,
+					gender,
 					city,
 					state,
 					zipcode,
@@ -100,6 +103,7 @@ router
 				firstName,
 				lastName,
 				dob,
+				gender,
 				city,
 				state,
 				zipcode,
@@ -111,12 +115,22 @@ router
 				!firstName ||
 				!lastName ||
 				!dob ||
+				!gender ||
 				!city ||
 				!state ||
 				!zipcode ||
 				!country
 			) {
-				console.log(firstName, lastName, dob, city, state, country, zipcode);
+				console.log(
+					firstName,
+					lastName,
+					dob,
+					gender,
+					city,
+					state,
+					country,
+					zipcode
+				);
 				console.log('Enter all the details');
 				res.status(400).json({
 					msg: 'Enter all the details',
@@ -141,6 +155,7 @@ router
 					firstName,
 					lastName,
 					dob,
+					gender,
 					city,
 					state,
 					zipcode,

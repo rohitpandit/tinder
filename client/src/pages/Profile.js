@@ -10,12 +10,12 @@ const Profile = ({ setIsLogged }) => {
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
 	const [dob, setDob] = useState('');
+	const [gender, setGender] = useState('');
 	const [city, setCity] = useState('');
 	const [state, setState] = useState('');
 	const [zipcode, setZipcode] = useState('');
 	const [country, setCountry] = useState('');
 	const [avtars, setAvtars] = useState([]);
-	const [isAvtar, setIsAvtar] = useState(false);
 	const [tempImage, setTempImage] = useState(null);
 	const [imageLoading, setImageLoading] = useState(false);
 	const [formLoading, setFormLoading] = useState(false);
@@ -54,12 +54,11 @@ const Profile = ({ setIsLogged }) => {
 			if (user.country) {
 				setCountry(user.country);
 			}
+			if (user.gender) {
+				setGender(user.gender);
+			}
 
 			setFormLoading(false);
-
-			if (photos && photos.length > 0) {
-				setIsAvtar(true);
-			}
 
 			let photoArray = [];
 			for (let i = 0; i < photos.length; i++) {
@@ -91,12 +90,14 @@ const Profile = ({ setIsLogged }) => {
 			if (
 				firstName === '' ||
 				lastName === '' ||
+				gender === '' ||
 				dob === '' ||
 				state === '' ||
 				city === '' ||
 				country === '' ||
 				zipcode === ''
 			) {
+				toast.info('Enter all the details');
 				return;
 			}
 
@@ -104,6 +105,7 @@ const Profile = ({ setIsLogged }) => {
 			const res = await axios.put('http://localhost:5000/user', {
 				firstName,
 				lastName,
+				gender,
 				dob,
 				state,
 				city,
@@ -226,6 +228,24 @@ const Profile = ({ setIsLogged }) => {
 										value={dob}
 										onChange={(e) => setDob(e.target.value)}
 									/>
+								</div>
+
+								<div className='input-group mb-3'>
+									<div className='input-group-prepend'>
+										<span className='input-group-text' id='basic-addon3'>
+											Gender
+										</span>
+									</div>
+									<select
+										class='form-select form-control'
+										id='inputGroupSelect01'
+										value={gender}
+										onChange={(e) => setGender(e.target.value)}>
+										<option selected>Choose...</option>
+										<option value='male'>Male</option>
+										<option value='female'>Femal</option>
+										<option value='other'>Other</option>
+									</select>
 								</div>
 								<div className='input-group mb-3'>
 									<div className='input-group-prepend'>
