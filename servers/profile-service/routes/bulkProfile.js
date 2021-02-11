@@ -26,13 +26,21 @@ router.get('/', async (req, res) => {
 
 		console.log(users[0]);
 
+		//only data relevent for the recommendation service
+		const user = {
+			_id: users._id,
+			firstName: users.firstName,
+			lastName: users.lastName,
+			dob: users.dob,
+		};
+
 		let photos = [];
 		for (let i = 0; i < users[0].photosUrl.length; i++) {
 			const photo = await fs_readFile(users[0].photosUrl[i]);
 
 			photos.push(photo);
 		}
-		res.status(200).json({ user: users[0], photos });
+		res.status(200).json({ user, photos });
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}
