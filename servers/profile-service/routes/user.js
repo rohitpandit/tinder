@@ -4,7 +4,6 @@ const path = require('path');
 const util = require('util');
 const User = require('../models/User');
 const multer = require('multer');
-const { use } = require('../../auth-service/routes/user');
 
 //imposing async/await behaviour in our fs module
 const fs_readdir = util.promisify(fs.readdir);
@@ -28,6 +27,10 @@ router
 			const { id } = req.params;
 			const user = await User.findOne({ _id: id });
 			console.log(user);
+
+			if (user === null) {
+				res.status(400).json({ error: 'User not found' });
+			}
 
 			const photos = [];
 			for (let i = 0; i < user.photosUrl.length; i++) {
