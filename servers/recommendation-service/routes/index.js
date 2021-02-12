@@ -7,6 +7,7 @@ router.get('/user', async (req, res) => {
 	try {
 		const result = await axios.get(`http://localhost:5001/bulkProfile/`);
 
+		console.log(result.data);
 		res.send(result.data);
 	} catch (error) {
 		console.log(error.stack);
@@ -26,7 +27,7 @@ router.get('/photo/:photoNum', async (req, res) => {
 			`http://localhost:5001/bulkProfile/photo/${photoNum}`
 		);
 
-		res.send(result.data);
+		res.status(200).json({ photo: result.data });
 	} catch (error) {
 		console.log(error.stack);
 		res.status(500).json({ error: error.message });

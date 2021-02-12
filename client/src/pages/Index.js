@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Footer from '../component/layout/Footer';
 import Navbar from '../component/layout/Navbar';
 import Loading from '../component/Loading';
@@ -9,7 +9,13 @@ const Index = ({ setIsLogged }) => {
 	const [photoCount, setPhotoCount] = useState(0);
 
 	useEffect(async () => {
-		const userData = await axios.get('http://localhost:5000/');
+		//getting the data about the user
+		const userData = await axios.get('http://localhost:5000/index/user');
+		setPhotoCount(userData.data.user.photosLength);
+		setUser(userData.data.user);
+
+		//getting the first photo of the user
+		const photo = await axios.get('http://localhost:5000/index/photo/0');
 	}, []);
 
 	return (
@@ -23,12 +29,19 @@ const Index = ({ setIsLogged }) => {
 					<div
 						className='card pl-6 pr-6 border position-relative'
 						style={{ width: '25rem' }}>
-						<img
-							className='card-img-top o'
-							src='https://i.redd.it/la4wfhzam3g61.jpg'
-							alt='Card image cap'
-							style={{ height: '30rem', objectFit: 'cover' }}
-						/>
+						{photoCount === 0 ? (
+							<i
+								class='card-img-top fas fa-user fa-10x d-flex justify-content-center align-items-center bg-dark text-light'
+								style={{ height: '30rem', objectFit: 'cover' }}></i>
+						) : (
+							<img
+								className='card-img-top '
+								src='https://i.redd.it/la4wfhzam3g61.jpg'
+								alt='Card image cap'
+								style={{ height: '30rem', objectFit: 'cover' }}
+							/>
+						)}
+
 						<div
 							className='card-body position-absolute pl-5 pr-5 pb-1'
 							style={{ bottom: '0', left: '0', width: '100%' }}>

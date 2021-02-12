@@ -12,9 +12,9 @@ router.get('/user', async (req, res) => {
 			return;
 		}
 
-		const result = await axios.get('http://localhost:5001/user');
+		const result = await axios.get('http://localhost:5002/user');
 
-		res.status(200).json({ user: result.data });
+		res.status(200).json({ user: result.data.user });
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}
@@ -35,9 +35,9 @@ router.get('/photo/:photoNum', async (req, res) => {
 			return;
 		}
 
-		const result = await axios.get(`http://localhost:5001/photo/${photoNum}`);
+		const result = await axios.get(`http://localhost:5002/photo/${photoNum}`);
 
-		res.status(200).json({ photo: result.data });
+		res.status(200).json({ photo: result.data.photo });
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}
