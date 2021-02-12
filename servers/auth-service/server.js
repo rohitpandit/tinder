@@ -4,6 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const auth = require('./routes/auth');
 const user = require('./routes/user');
+const recommendation = require('./routes/recommendation');
 const db = require('./db');
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.json({ limit: '50mb' }));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
+app.use('/', recommendation);
 app.use('/auth', auth);
 app.use('/user', user);
 

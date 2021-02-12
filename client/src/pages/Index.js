@@ -1,9 +1,17 @@
-import React, { Fragment } from 'react';
+import axios from 'axios';
+import React, { Fragment, useState } from 'react';
 import Footer from '../component/layout/Footer';
 import Navbar from '../component/layout/Navbar';
 import Loading from '../component/Loading';
 
 const Index = ({ setIsLogged }) => {
+	const [user, setUser] = useState(null);
+	const [photoCount, setPhotoCount] = useState(0);
+
+	useEffect(async () => {
+		const userData = await axios.get('http://localhost:5000/');
+	}, []);
+
 	return (
 		<Fragment>
 			<Navbar setIsLogged={setIsLogged} />
