@@ -5,14 +5,6 @@ const router = express.Router();
 const fs = require('fs');
 const util = require('util');
 
-//imposing async/await behaviour in our fs module
-const fs_readdir = util.promisify(fs.readdir);
-const fs_writeFile = util.promisify(fs.writeFile);
-const fs_mkdir = util.promisify(fs.mkdir);
-const fs_readFile = util.promisify(fs.readFile);
-const fs_unlink = util.promisify(fs.unlink);
-const fs_rename = util.promisify(fs.rename);
-
 //route just to send the user info
 router.get('/', async (req, res) => {
 	try {

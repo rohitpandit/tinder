@@ -12,7 +12,7 @@ app.use(express.json({ limit: '50mb' }));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
-app.get('/', router);
+app.use('/', router);
 
 app.listen(port, () => {
 	console.log(`Recommendation service listening at port: ${port}`);
