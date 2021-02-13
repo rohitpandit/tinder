@@ -14,7 +14,7 @@ router.get('/user', async (req, res) => {
 
 		const result = await axios.get('http://localhost:5002/user');
 
-		res.status(200).json({ user: result.data.user });
+		res.status(200).send(result.data.user);
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}
@@ -31,13 +31,14 @@ router.get('/photo/:photoNum', async (req, res) => {
 		//verify token
 		const decoded = jwt.verify(req.headers.authorization.split(' ')[1], 'test');
 		if (decoded === null) {
-			res.status(401).json({ msg: 'User is not authorized' });
+			res.status(401).json({ error: 'User is not authorized' });
 			return;
 		}
 
 		const result = await axios.get(`http://localhost:5002/photo/${photoNum}`);
 
-		res.status(200).json({ photo: result.data.photo });
+		console.log(typeof result.data.photo);
+		res.status(200).send(result.data.photo);
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}

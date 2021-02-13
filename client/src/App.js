@@ -14,6 +14,7 @@ import Chat from './pages/Chat';
 import Match from './pages/Match';
 import Profile from './pages/Profile';
 import PageNotFound from './pages/PageNotFound';
+import Test from './pages/test';
 import './bootstrap.min.css';
 import './app.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -74,7 +75,8 @@ function App() {
 					</Route>
 					<Route path='*'>
 						{isLogged !== null ? (
-							<PageNotFound history={history} setIsLogged={setIsLogged} />
+							// <PageNotFound history={history} setIsLogged={setIsLogged} />
+							<Test history={history} setIsLogged={setIsLogged} />
 						) : (
 							<Redirect from='/chat/:id' to='/login' />
 						)}

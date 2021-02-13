@@ -27,7 +27,7 @@ router
 					headers: { 'content-type': 'application/json' },
 				}
 			);
-			console.log(result.data);
+			console.log(typeof result.data.photos);
 			res
 				.status(200)
 				.json({ user: result.data.user, photos: result.data.photos });
@@ -108,7 +108,6 @@ router
 				state,
 				zipcode,
 				country,
-				photos,
 			} = req.body;
 			console.log(req);
 			if (

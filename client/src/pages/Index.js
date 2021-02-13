@@ -7,15 +7,37 @@ import Loading from '../component/Loading';
 const Index = ({ setIsLogged }) => {
 	const [user, setUser] = useState(null);
 	const [photoCount, setPhotoCount] = useState(0);
+	const [imageLink, setImageLink] = useState(null);
 
-	useEffect(async () => {
-		//getting the data about the user
-		const userData = await axios.get('http://localhost:5000/index/user');
-		setPhotoCount(userData.data.user.photosLength);
-		setUser(userData.data.user);
+	useEffect(() => {
+		const getUserProfile = async () => {
+			//getting the data about the user
+			const userData = await axios.get('http://localhost:5000/index/user');
+			setPhotoCount(userData.data.photosLength);
+			setUser(userData.data);
 
-		//getting the first photo of the user
-		const photo = await axios.get('http://localhost:5000/index/photo/0');
+			//getting the first photo of the user
+			const photo = await axios.get('http://localhost:5000/index/photo/0');
+			console.log(photo.data.photo);
+
+			// const arrayBufferView = new Uint8Array(photo.data.photo);
+			// const arrayBufferView = photo.data.photo;
+			// const blob = new Blob([arrayBufferView], { type: 'image/jpeg' });
+			// const urlCreator = window.URL || window.webkitURL;
+			// const imageUrl = urlCreator.createObjectURL(blob);
+			// console.log(imageUrl);
+			// setImageLink(imageUrl);
+
+			const blob = new Blob([photo.data.photo]);
+			const url = URL.createObjectURL(blob);
+			const img = document.getElementById('profile-img');
+			img.src = url;
+			console.log(img.src);
+
+			img.onload = (e) => URL.revokeObjectURL(url);
+		};
+
+		getUserProfile();
 	}, []);
 
 	return (
@@ -31,13 +53,13 @@ const Index = ({ setIsLogged }) => {
 						style={{ width: '25rem' }}>
 						{photoCount === 0 ? (
 							<i
-								class='card-img-top fas fa-user fa-10x d-flex justify-content-center align-items-center bg-dark text-light'
+								className='card-img-top fas fa-user fa-10x d-flex justify-content-center align-items-center bg-dark text-light'
 								style={{ height: '30rem', objectFit: 'cover' }}></i>
 						) : (
 							<img
+								id='profile-img'
 								className='card-img-top '
-								src='https://i.redd.it/la4wfhzam3g61.jpg'
-								alt='Card image cap'
+								alt='profile image'
 								style={{ height: '30rem', objectFit: 'cover' }}
 							/>
 						)}

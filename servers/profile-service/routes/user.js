@@ -26,7 +26,7 @@ router
 		try {
 			const { id } = req.params;
 			const user = await User.findOne({ _id: id });
-			console.log(user);
+			// console.log(user);
 
 			if (user === null) {
 				res.status(400).json({ error: 'User not found' });
@@ -38,8 +38,8 @@ router
 				photos.unshift(temp);
 			}
 
-			console.log(user.photosUrl.length);
-			console.log(photos);
+			// console.log(user.photosUrl.length);
+			// console.log(photos);
 
 			res.json({ user: user, photos: photos });
 		} catch (error) {
@@ -206,13 +206,14 @@ router.put('/photos/:id', async (req, res) => {
 			}
 			await user.save();
 		} else {
-			const dir = await fs_mkdir(`./upload/${req.params.id}`);
+			// const dir = await fs_mkdir(`./upload/${req.params.id}`);
 
 			const count = 0;
 
 			fs_writeFile(
 				`./upload/${req.params.id}/${count}.jpeg`,
-				Buffer.from(req.body.newAvtar.buffer.data)
+				// Buffer.from(req.body.newAvtar.buffer.data)
+				req.body.newAvtar.buffer.data
 			);
 
 			const user = await User.findById({ _id: id });
@@ -242,7 +243,7 @@ router.delete('/photos/:id/:count', async (req, res) => {
 	try {
 		const { count, id } = req.params;
 
-		//remaning the files
+		//renaming the files
 		await fs_unlink(`./upload/${id}/${count}.jpeg`);
 		const files = await fs_readdir(`./upload/${id}`);
 		console.log(files);

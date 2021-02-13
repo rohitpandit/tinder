@@ -30,9 +30,8 @@ const Profile = ({ setIsLogged }) => {
 				return;
 			}
 
-			console.log('shi');
-
 			const { user, photos } = initialData.data;
+			console.log(user, photos);
 			if (user.firstName) {
 				setFirstName(user.firstName);
 			}
@@ -237,7 +236,7 @@ const Profile = ({ setIsLogged }) => {
 										</span>
 									</div>
 									<select
-										class='form-select form-control'
+										className='form-select form-control'
 										id='inputGroupSelect01'
 										value={gender}
 										onChange={(e) => setGender(e.target.value)}>

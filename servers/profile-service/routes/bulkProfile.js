@@ -5,6 +5,9 @@ const router = express.Router();
 const fs = require('fs');
 const util = require('util');
 
+//promisify the fs functions
+const fs_readFile = util.promisify(fs.readFile);
+
 //route just to send the user info
 router.get('/', async (req, res) => {
 	try {
@@ -48,7 +51,9 @@ router.get('/photo/:photoNum', async (req, res) => {
 			return;
 		}
 
-		fs.createReadStream(users[0].photosUrl[photoNum]).pipe(res);
+		// fs.createReadStream(users[0].photosUrl[photoNum]).pipe(res);
+		const photo = await fs_readFile(users[0].photosUrl[photoNum]);
+		res.status(200).json({ photo });
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}
