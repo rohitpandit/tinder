@@ -7,7 +7,7 @@ import Loading from '../component/Loading';
 const Index = ({ setIsLogged }) => {
 	const [user, setUser] = useState(null);
 	const [photoCount, setPhotoCount] = useState(0);
-	const [imageLink, setImageLink] = useState(null);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		const getUserProfile = async () => {
@@ -16,23 +16,22 @@ const Index = ({ setIsLogged }) => {
 			setPhotoCount(userData.data.photosLength);
 			setUser(userData.data);
 
+			if (userData.data.photoCount !== 0) {
+				setLoading(true);
+			}
+
 			//getting the first photo of the user
 			const photo = await axios.get('http://localhost:5000/index/photo/0');
 			console.log(photo.data.photo);
 
-			// const arrayBufferView = new Uint8Array(photo.data.photo);
-			// const arrayBufferView = photo.data.photo;
-			// const blob = new Blob([arrayBufferView], { type: 'image/jpeg' });
-			// const urlCreator = window.URL || window.webkitURL;
-			// const imageUrl = urlCreator.createObjectURL(blob);
-			// console.log(imageUrl);
-			// setImageLink(imageUrl);
+			const arrayBufferView = new Uint8Array(photo.data.photo.data);
+			const url = URL.createObjectURL(
+				new Blob([arrayBufferView], { type: MimeType })
+			);
 
-			const blob = new Blob([photo.data.photo]);
-			const url = URL.createObjectURL(blob);
 			const img = document.getElementById('profile-img');
 			img.src = url;
-			console.log(img.src);
+			setLoading(false);
 
 			img.onload = (e) => URL.revokeObjectURL(url);
 		};
@@ -67,7 +66,12 @@ const Index = ({ setIsLogged }) => {
 						<div
 							className='card-body position-absolute pl-5 pr-5 pb-1'
 							style={{ bottom: '0', left: '0', width: '100%' }}>
-							<h5 className='card-title text-light '>Name Age</h5>
+							<h5 className='card-title text-light '>
+								<span className='bg-dark p-2'>
+									<strong>name</strong>
+								</span>{' '}
+								<span className='bg-dark p-2'>Age</span>
+							</h5>
 
 							<div className='d-flex justify-content-between  '>
 								<a href='#' className='btn btn-danger'>
