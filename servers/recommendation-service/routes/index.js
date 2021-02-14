@@ -5,12 +5,9 @@ const router = express.Router();
 //router to get only the data
 router.get('/user', async (req, res) => {
 	try {
-		const result = await axios.get(`http://localhost:5001/bulkProfile/`);
+		const result = await axios.get(`http://localhost:5001/bulkProfile/user`);
 
-		console.log(Buffer.isBuffer(result.data));
-
-		// console.log(result.data);
-		res.status(200).json({ photo: result.data.photo });
+		res.status(200).json({ user: result.data.user });
 	} catch (error) {
 		console.log(error.stack);
 		res.status(500).json({ error: error.message });

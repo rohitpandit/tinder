@@ -9,7 +9,7 @@ const util = require('util');
 const fs_readFile = util.promisify(fs.readFile);
 
 //route just to send the user info
-router.get('/', async (req, res) => {
+router.get('/user', async (req, res) => {
 	try {
 		//sending just one user at a time
 		const users = await User.find({ gender: 'female' }).skip(1).limit(1);

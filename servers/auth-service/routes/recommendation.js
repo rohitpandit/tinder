@@ -14,7 +14,7 @@ router.get('/user', async (req, res) => {
 
 		const result = await axios.get('http://localhost:5002/user');
 
-		res.status(200).send(result.data.user);
+		res.status(200).send(result.data);
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}

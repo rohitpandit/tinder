@@ -101,7 +101,7 @@ const Profile = ({ setIsLogged }) => {
 			}
 
 			setFormLoading(true);
-			const res = await axios.put('http://localhost:5000/user', {
+			await axios.put('http://localhost:5000/user', {
 				firstName,
 				lastName,
 				gender,
@@ -141,11 +141,7 @@ const Profile = ({ setIsLogged }) => {
 			};
 
 			setImageLoading(true);
-			const result = await axios.put(
-				'http://localhost:5000/user/photos',
-				formData,
-				config
-			);
+			await axios.put('http://localhost:5000/user/photos', formData, config);
 			setImageLoading(false);
 			setTempImage(null);
 			window.location.reload();
@@ -158,9 +154,7 @@ const Profile = ({ setIsLogged }) => {
 	const deleteImageHandler = async (count) => {
 		try {
 			setImageLoading(true);
-			const result = await axios.delete(
-				`http://localhost:5000/user/photos/${count}`
-			);
+			await axios.delete(`http://localhost:5000/user/photos/${count}`);
 			setImageLoading(false);
 			setTempImage(null);
 			window.location.reload();
