@@ -11,15 +11,18 @@ const Index = ({ setIsLogged }) => {
 	const [photoCount, setPhotoCount] = useState(0);
 	const [loading, setLoading] = useState(false);
 	const [currentCount, setCurrntCount] = useState(0);
+	const [totalViewed, setTotalViewed] = useState(0);
 
 	//useEffect for getting the user data like name and age
 	useEffect(() => {
-		getUserName();
-		getUserProfile(0);
+		getUserName(totalViewed);
+		getUserProfile(totalViewed, 0);
 	}, []);
 
-	const getUserName = async () => {
-		const userData = await axios.get('http://localhost:5000/index/user');
+	const getUserName = async (skip) => {
+		const userData = await axios.get(
+			`http://localhost:5000/index/user/${skip}`
+		);
 		const { user } = userData.data;
 		console.log(user);
 		setPhotoCount(user.photoCount);
@@ -35,10 +38,10 @@ const Index = ({ setIsLogged }) => {
 		}
 	};
 
-	const getUserProfile = async (photoNum) => {
+	const getUserProfile = async (skip, photoNum) => {
 		//getting the first photo of the user
 		const photo = await axios.get(
-			`http://localhost:5000/index/photo/${photoNum}`
+			`http://localhost:5000/index/photo/${photoNum}/${skip}`
 		);
 		console.log(photo.data.photo);
 
@@ -55,24 +58,47 @@ const Index = ({ setIsLogged }) => {
 		img.onload = (e) => URL.revokeObjectURL(url);
 	};
 
+	//Arrow handlers
 	const onLeftArrowHandler = () => {
+		if (photoCount === 0) {
+			return;
+		}
 		if (currentCount === 0) {
 			return;
 		}
 		let count = currentCount;
 		count--;
-		getUserProfile(count);
+		getUserProfile(totalViewed, count);
 		setCurrntCount(count);
 	};
 
 	const onRightArrowHandler = () => {
+		if (photoCount === 0) {
+			return;
+		}
 		if (currentCount === photoCount - 1) {
 			return;
 		}
 		let count = currentCount;
 		count++;
-		getUserProfile(count);
+		getUserProfile(totalViewed, count);
 		setCurrntCount(count);
+	};
+
+	const rejectHandler = () => {
+		console.log('rejected');
+		let viewed = totalViewed;
+		viewed++;
+		setTotalViewed(viewed);
+		console.log(viewed);
+	};
+
+	const acceptHandler = () => {
+		console.log('accepted');
+		let viewed = totalViewed;
+		viewed++;
+		setTotalViewed(viewed);
+		console.log(viewed);
 	};
 
 	return (
@@ -113,12 +139,12 @@ const Index = ({ setIsLogged }) => {
 							</h5>
 
 							<div className='d-flex justify-content-between  '>
-								<a href='#' className='btn btn-danger'>
+								<button onClick={rejectHandler} className='btn btn-danger'>
 									Reject
-								</a>
-								<a href='#' className='btn btn-success'>
+								</button>
+								<button onClick={acceptHandler} className='btn btn-success'>
 									Accept
-								</a>
+								</button>
 							</div>
 						</div>
 					</div>
