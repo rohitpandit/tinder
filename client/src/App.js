@@ -20,6 +20,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 	const [isLogged, setIsLogged] = useState(localStorage.getItem('token'));
+	const [totalViewed, setTotalViewed] = useState(0);
 
 	axios.defaults.headers.common = {
 		// Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -32,7 +33,12 @@ function App() {
 				<Switch>
 					<Route exact path='/'>
 						{isLogged !== null ? (
-							<Index history={history} setIsLogged={setIsLogged} />
+							<Index
+								totalViewed={totalViewed}
+								setTotalViewed={setTotalViewed}
+								history={history}
+								setIsLogged={setIsLogged}
+							/>
 						) : (
 							<Redirect from='/' to='/login' />
 						)}

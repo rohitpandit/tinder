@@ -4,20 +4,23 @@ import Footer from '../component/layout/Footer';
 import Navbar from '../component/layout/Navbar';
 // import Loading from '../component/Loading';
 
-const Index = ({ setIsLogged }) => {
+const Index = ({ setIsLogged, totalViewed, setTotalViewed }) => {
+	// const pastViewedProfiles = localStorage
+
+	console.log(totalViewed);
+
 	const [name, setName] = useState('');
 	const [age, setAge] = useState(0);
 	const [id, setId] = useState('');
 	const [photoCount, setPhotoCount] = useState(0);
 	const [loading, setLoading] = useState(false);
 	const [currentCount, setCurrntCount] = useState(0);
-	const [totalViewed, setTotalViewed] = useState(0);
 
 	//useEffect for getting the user data like name and age
 	useEffect(() => {
 		getUserName(totalViewed);
 		getUserProfile(totalViewed, 0);
-	}, []);
+	}, [totalViewed]);
 
 	const getUserName = async (skip) => {
 		const userData = await axios.get(
@@ -25,7 +28,7 @@ const Index = ({ setIsLogged }) => {
 		);
 		const { user } = userData.data;
 		console.log(user);
-		setPhotoCount(user.photoCount);
+		setPhotoCount(user.photosLength);
 		setName(user.firstName + ' ' + user.lastName);
 		setId(user._id);
 
@@ -85,20 +88,24 @@ const Index = ({ setIsLogged }) => {
 		setCurrntCount(count);
 	};
 
+	//Handling the like/Accept
 	const rejectHandler = () => {
 		console.log('rejected');
 		let viewed = totalViewed;
 		viewed++;
 		setTotalViewed(viewed);
 		console.log(viewed);
+		// window.location.reload();
 	};
 
+	//handling the dislike/Reject
 	const acceptHandler = () => {
 		console.log('accepted');
 		let viewed = totalViewed;
 		viewed++;
 		setTotalViewed(viewed);
 		console.log(viewed);
+		// window.location.reload();
 	};
 
 	return (
