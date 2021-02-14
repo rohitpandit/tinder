@@ -18,9 +18,16 @@ const Index = ({ setIsLogged, totalViewed, setTotalViewed }) => {
 
 	//useEffect for getting the user data like name and age
 	useEffect(() => {
+		setCurrntCount(0);
 		getUserName(totalViewed);
 		getUserProfile(totalViewed, 0);
 	}, [totalViewed]);
+
+	//function for setting the match to the get saved in the match service
+	const setAccept = async (personId) => {
+		console.log(personId);
+		await axios.post('http://localhost:5000/match', { personId });
+	};
 
 	const getUserName = async (skip) => {
 		const userData = await axios.get(
@@ -88,24 +95,23 @@ const Index = ({ setIsLogged, totalViewed, setTotalViewed }) => {
 		setCurrntCount(count);
 	};
 
-	//Handling the like/Accept
+	//Handling the dislike/Reject
 	const rejectHandler = () => {
 		console.log('rejected');
 		let viewed = totalViewed;
 		viewed++;
 		setTotalViewed(viewed);
 		console.log(viewed);
-		// window.location.reload();
 	};
 
-	//handling the dislike/Reject
+	//handling the like/Accept
 	const acceptHandler = () => {
 		console.log('accepted');
 		let viewed = totalViewed;
 		viewed++;
 		setTotalViewed(viewed);
 		console.log(viewed);
-		// window.location.reload();
+		setAccept(id);
 	};
 
 	return (

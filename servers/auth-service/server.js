@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const auth = require('./routes/auth');
 const user = require('./routes/user');
 const recommendation = require('./routes/recommendation');
+const match = require('./routes/match');
 const db = require('./db');
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 app.use('/index', recommendation);
 app.use('/auth', auth);
 app.use('/user', user);
+app.use('/match', match);
 
 app.listen(port, () => {
 	console.log(`auth live at port: ${port}`);
