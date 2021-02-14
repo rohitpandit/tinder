@@ -3,7 +3,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 
-router.get('/user', async (req, res) => {
+router.get('/user/:skip', async (req, res) => {
 	try {
 		//verify token
 		const decoded = jwt.verify(req.headers.authorization.split(' ')[1], 'test');
@@ -12,7 +12,9 @@ router.get('/user', async (req, res) => {
 			return;
 		}
 
-		const result = await axios.get('http://localhost:5002/user');
+		const { skip } = req.params;
+
+		const result = await axios.get(`http://localhost:5002/user/${skip}`);
 
 		res.status(200).send(result.data);
 	} catch (error) {
@@ -20,9 +22,9 @@ router.get('/user', async (req, res) => {
 	}
 });
 
-router.get('/photo/:photoNum', async (req, res) => {
+router.get('/photo/:photoNum/:skip', async (req, res) => {
 	try {
-		const { photoNum } = req.params;
+		const { photoNum, skip } = req.params;
 		if (photoNum > 4) {
 			res.status(400).json({ error: 'Invalid request' });
 			return;
@@ -35,7 +37,9 @@ router.get('/photo/:photoNum', async (req, res) => {
 			return;
 		}
 
-		const result = await axios.get(`http://localhost:5002/photo/${photoNum}`);
+		const result = await axios.get(
+			`http://localhost:5002/photo/${photoNum}/${skip}`
+		);
 
 		console.log(typeof result.data.photo);
 		res.status(200).send(result.data.photo);

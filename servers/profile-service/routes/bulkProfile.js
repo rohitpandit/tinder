@@ -9,10 +9,13 @@ const util = require('util');
 const fs_readFile = util.promisify(fs.readFile);
 
 //route just to send the user info
-router.get('/user', async (req, res) => {
+router.get('/user/:skip', async (req, res) => {
 	try {
+		const { skip } = req.params;
 		//sending just one user at a time
-		const users = await User.find({ gender: 'female' }).skip(1).limit(1);
+		const users = await User.find({ gender: 'female' })
+			.skip(Number.parseInt(skip))
+			.limit(1);
 		if (users[0] === null) {
 			res.status(200).json({ error: 'No more Profiles available' });
 			return;
@@ -36,16 +39,18 @@ router.get('/user', async (req, res) => {
 
 //random comment
 //route to send the photo of user
-router.get('/photo/:photoNum', async (req, res) => {
+router.get('/photo/:photoNum/:skip', async (req, res) => {
 	try {
-		const { photoNum } = req.params;
+		const { photoNum, skip } = req.params;
 		if (photoNum > 4 || photoNum < 0) {
 			res.status(400).json({ error: 'Invalid url' });
 			return;
 		}
 
 		//sending just one user at a time
-		const users = await User.find({ gender: 'female' }).skip(0).limit(1);
+		const users = await User.find({ gender: 'female' })
+			.skip(Number.parseInt(skip))
+			.limit(1);
 		if (users[0] === null) {
 			res.status(200).json({ error: 'No more Profiles available' });
 			return;
