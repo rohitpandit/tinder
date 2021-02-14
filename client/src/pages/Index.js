@@ -10,11 +10,12 @@ const Index = ({ setIsLogged }) => {
 	const [id, setId] = useState('');
 	const [photoCount, setPhotoCount] = useState(0);
 	const [loading, setLoading] = useState(false);
+	const [currentCount, setCurrntCount] = useState(0);
 
 	//useEffect for getting the user data like name and age
 	useEffect(() => {
 		getUserName();
-		getUserProfile();
+		getUserProfile(0);
 	}, []);
 
 	const getUserName = async () => {
@@ -34,9 +35,11 @@ const Index = ({ setIsLogged }) => {
 		}
 	};
 
-	const getUserProfile = async () => {
+	const getUserProfile = async (photoNum) => {
 		//getting the first photo of the user
-		const photo = await axios.get('http://localhost:5000/index/photo/0');
+		const photo = await axios.get(
+			`http://localhost:5000/index/photo/${photoNum}`
+		);
 		console.log(photo.data.photo);
 
 		const arrayBufferView = new Uint8Array(photo.data.photo.data);
@@ -52,16 +55,38 @@ const Index = ({ setIsLogged }) => {
 		img.onload = (e) => URL.revokeObjectURL(url);
 	};
 
+	const onLeftArrowHandler = () => {
+		if (currentCount === 0) {
+			return;
+		}
+		let count = currentCount;
+		count--;
+		getUserProfile(count);
+		setCurrntCount(count);
+	};
+
+	const onRightArrowHandler = () => {
+		if (currentCount === photoCount - 1) {
+			return;
+		}
+		let count = currentCount;
+		count++;
+		getUserProfile(count);
+		setCurrntCount(count);
+	};
+
 	return (
 		<Fragment>
 			<Navbar setIsLogged={setIsLogged} />
 			<main className='container' style={{ height: '100vh' }}>
 				<div className='d-flex m-2 justify-content-center align-items-center '>
-					<div className=''>
+					<div
+						onClick={onLeftArrowHandler}
+						className='shadow m-2 pt-2 pb-2 pl-3 pr-3 border bg-dark text-light rounded-circle'>
 						<i className='fas fa-chevron-left'></i>
 					</div>
 					<div
-						className='card pl-6 pr-6 border position-relative'
+						className=' shadow card pl-6 pr-6 border position-relative'
 						style={{ width: '25rem' }}>
 						{photoCount === 0 ? (
 							<i
@@ -97,7 +122,9 @@ const Index = ({ setIsLogged }) => {
 							</div>
 						</div>
 					</div>
-					<div className=''>
+					<div
+						onClick={onRightArrowHandler}
+						className='shadow m-2 pt-2 pb-2 pl-3 pr-3 border bg-dark text-light rounded-circle'>
 						<i className='fas fa-chevron-right'></i>
 					</div>
 				</div>
