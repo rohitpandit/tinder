@@ -19,8 +19,14 @@ import './app.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
+	if (localStorage.getItem('totalViewed') === 0) {
+		localStorage.setItem('totalViewed', 0);
+	}
+
 	const [isLogged, setIsLogged] = useState(localStorage.getItem('token'));
-	const [totalViewed, setTotalViewed] = useState(0);
+	const [totalViewed, setTotalViewed] = useState(
+		localStorage.getItem('totalViewed')
+	);
 
 	axios.defaults.headers.common = {
 		// Authorization: `Bearer ${localStorage.getItem('token')}`,

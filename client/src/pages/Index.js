@@ -21,6 +21,7 @@ const Index = ({ setIsLogged, totalViewed, setTotalViewed }) => {
 		setCurrntCount(0);
 		getUserName(totalViewed);
 		getUserProfile(totalViewed, 0);
+		localStorage.setItem('totalViewed', totalViewed);
 	}, [totalViewed]);
 
 	//function for setting the match to the get saved in the match service
