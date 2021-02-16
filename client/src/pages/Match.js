@@ -3,10 +3,10 @@ import React from 'react';
 import Navbar from '../component/layout/Navbar';
 import Footer from '../component/layout/Footer';
 
-const Match = ({ setIsLogged }) => {
+const Match = ({ setIsLogged, setTotalViewed }) => {
 	return (
 		<div>
-			<Navbar setIsLogged={setIsLogged} />
+			<Navbar setTotalViewed={setTotalViewed} setIsLogged={setIsLogged} />
 			Mathces
 			<Footer />
 		</div>

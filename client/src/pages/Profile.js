@@ -6,7 +6,7 @@ import Footer from '../component/layout/Footer';
 import Image from '../component/Image';
 import Loading from '../component/Loading';
 
-const Profile = ({ setIsLogged }) => {
+const Profile = ({ setIsLogged, setTotalViewed }) => {
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
 	const [dob, setDob] = useState('');
@@ -166,7 +166,7 @@ const Profile = ({ setIsLogged }) => {
 
 	return (
 		<div>
-			<Navbar setIsLogged={setIsLogged} />
+			<Navbar setTotalViewed={setTotalViewed} setIsLogged={setIsLogged} />
 			<ToastContainer />
 			<div className='container mb-5 mt-2'>
 				<h1>Profile</h1>

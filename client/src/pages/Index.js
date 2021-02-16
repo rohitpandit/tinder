@@ -117,7 +117,7 @@ const Index = ({ setIsLogged, totalViewed, setTotalViewed }) => {
 
 	return (
 		<Fragment>
-			<Navbar setIsLogged={setIsLogged} />
+			<Navbar setTotalViewed={setTotalViewed} setIsLogged={setIsLogged} />
 			<main className='container' style={{ height: '100vh' }}>
 				<div className='d-flex m-2 justify-content-center align-items-center '>
 					<div

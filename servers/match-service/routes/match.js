@@ -27,6 +27,13 @@ router.post('/:id', async (req, res) => {
 
 		await newMatch.save();
 
+		const isMatch = await Match.find({ user: personId, likedUser: id });
+
+		if (isMatch) {
+			res.send(200).json({ msg: 'You have a new match' });
+			return;
+		}
+
 		res.status(201).json({ msg: 'saved to the match service' });
 	} catch (error) {
 		console.log(error.message);
