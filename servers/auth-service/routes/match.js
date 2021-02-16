@@ -35,11 +35,11 @@ router.post('/', async (req, res) => {
 router.get('/connection', async (req, res) => {
 	try {
 		//verify token
-		// const decoded = jwt.verify(req.headers.authorization.split(' ')[1], test);
-		// if (decoded === null) {
-		// 	res.status(401).json({ error: 'User is not authorized' });
-		// 	return;
-		// }
+		const decoded = jwt.verify(req.headers.authorization.split(' ')[1], test);
+		if (decoded === null) {
+			res.status(401).json({ error: 'User is not authorized' });
+			return;
+		}
 
 		console.log('hi');
 		const result = await axios.get(`http://localhost:5003/connection`);

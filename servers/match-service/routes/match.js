@@ -36,7 +36,13 @@ router.post('/:id', async (req, res) => {
 				user2: personId,
 			});
 
+			const newConnectionSame = new Connection({
+				user1: personId,
+				user2: id,
+			});
+
 			await newConnection.save();
+			await newConnectionSame.save();
 			res.send(200).json({ msg: 'You have a new match' });
 			return;
 		}

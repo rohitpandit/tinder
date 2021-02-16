@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const db = require('./db');
 const userRoute = require('./routes/user');
 const bulkRouter = require('./routes/bulkProfile');
+const singleUser = require('./routes/singleUser');
 
 const app = express();
 const port = 5001;
@@ -23,5 +24,6 @@ app.get('/', (req, res) => {
 
 app.use('/user', userRoute);
 app.use('/bulkProfile', bulkRouter);
+app.use('/singleUser', singleUser);
 
 app.listen(port, console.log(`profile server listening at port: ${port}`));
