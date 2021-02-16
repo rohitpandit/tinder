@@ -1,5 +1,6 @@
 const express = require('express');
 const Match = require('../models/Match');
+const Connection = require('../models/Connection');
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -30,6 +31,12 @@ router.post('/:id', async (req, res) => {
 		const isMatch = await Match.find({ user: personId, likedUser: id });
 
 		if (isMatch) {
+			const newConnection = new Connection({
+				user1: id,
+				user2: personId,
+			});
+
+			await newConnection.save();
 			res.send(200).json({ msg: 'You have a new match' });
 			return;
 		}

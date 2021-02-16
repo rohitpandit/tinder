@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const app = express();
 const matchRouter = require('./routes/match');
+const connectionRoute = require('./routes/connection');
 
 const db = require('./db');
 
@@ -18,6 +19,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/match', matchRouter);
+app.use('/connection', connectionRoute);
 
 app.listen(port, () => {
 	console.log(`Match service live at port: ${port}`);
