@@ -9,7 +9,7 @@ const Match = ({ setIsLogged, setTotalViewed }) => {
 			<Navbar setTotalViewed={setTotalViewed} setIsLogged={setIsLogged} />
 
 			<div className='container mb-5 mt-2' style={style}>
-				<h1>My Mathes</h1>
+				<h1>My Matches</h1>
 				<hr />
 				<div
 					className='container d-flex border rounded m-3 bg-light'
