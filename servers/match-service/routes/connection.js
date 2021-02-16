@@ -17,7 +17,15 @@ router.get('/:id', async (req, res) => {
 		}
 
 		const users = [];
-		// conn.map(personId => await axios.get('http://localhost:5001/users') )
+		conn.map(async (personId) => {
+			const {
+				data: { user },
+			} = await axios.get(`http://localhost:5001/singleUser/${id}`);
+			users.unshift(user);
+			return;
+		});
+
+		res.send(users);
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}

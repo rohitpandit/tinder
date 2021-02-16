@@ -42,7 +42,9 @@ router.get('/connection', async (req, res) => {
 		}
 
 		console.log('hi');
-		const result = await axios.get(`http://localhost:5003/connection`);
+		const result = await axios.get(
+			`http://localhost:5003/connection/${decoded.id}`
+		);
 		res.status(200).json({ connecton: result.data });
 	} catch (error) {
 		res.status(500).json({ error: error.message });
