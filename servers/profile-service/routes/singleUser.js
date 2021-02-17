@@ -19,6 +19,7 @@ router.get('/:id', async (req, res) => {
 			firstName: user.firstName,
 			lastName: user.lastName,
 			dob: user.dob,
+			id: user._id,
 		};
 		console.log(userInfo);
 

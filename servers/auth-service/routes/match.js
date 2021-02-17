@@ -47,7 +47,7 @@ router.get('/connection', async (req, res) => {
 			`http://localhost:5003/connection/${decoded.id}`
 		);
 		console.log(result.data);
-		res.status(200).json({ connecton: result.data });
+		res.status(200).json({ connection: result.data });
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}
