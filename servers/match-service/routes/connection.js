@@ -7,6 +7,7 @@ const Connection = require('../models/Connection');
 router.get('/:id', async (req, res) => {
 	try {
 		const { id } = req.params;
+		console.log(id);
 		if (!id) {
 			res.status(400).json({ error: 'Invalid url' });
 		}
@@ -29,15 +30,14 @@ router.get('/:id', async (req, res) => {
 
 		for (let i = 0; i < conn.length; i++) {
 			const result = await axios.get(
-				`http://localhost:5001/singleUser/${conn[i].user1}`
+				`http://localhost:5001/singleUser/${conn[i].user2}`
 			);
-			console.log(conn[i].user1);
-			console.log(result.data[i]);
+			users.push(result.data);
 		}
 
 		console.log(users);
 
-		res.send(users);
+		res.status(200).json({ users: users });
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}

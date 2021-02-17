@@ -30,7 +30,7 @@ router.post('/:id', async (req, res) => {
 
 		const isMatch = await Match.find({ user: personId, likedUser: id });
 
-		if (isMatch) {
+		if (isMatch.length > 0) {
 			const newConnection = new Connection({
 				user1: id,
 				user2: personId,
@@ -43,7 +43,7 @@ router.post('/:id', async (req, res) => {
 
 			await newConnection.save();
 			await newConnectionSame.save();
-			res.send(200).json({ msg: 'You have a new match' });
+			res.status(200).json({ msg: 'You have a new match' });
 			return;
 		}
 
