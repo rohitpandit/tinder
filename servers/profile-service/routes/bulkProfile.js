@@ -13,9 +13,8 @@ router.get('/user/:skip', async (req, res) => {
 	try {
 		const { skip } = req.params;
 		//sending just one user at a time
-		const users = await User.find({ gender: 'female' })
-			.skip(Number.parseInt(skip))
-			.limit(1);
+		// const users = await User.find({ gender: 'female' })
+		const users = await User.find().skip(Number.parseInt(skip)).limit(1);
 		if (users[0] === null) {
 			res.status(200).json({ error: 'No more Profiles available' });
 			return;
@@ -48,9 +47,8 @@ router.get('/photo/:photoNum/:skip', async (req, res) => {
 		}
 
 		//sending just one user at a time
-		const users = await User.find({ gender: 'female' })
-			.skip(Number.parseInt(skip))
-			.limit(1);
+		// const users = await User.find({ gender: 'female' })
+		const users = await User.find().skip(Number.parseInt(skip)).limit(1);
 		if (users[0] === null) {
 			res.status(200).json({ error: 'No more Profiles available' });
 			return;

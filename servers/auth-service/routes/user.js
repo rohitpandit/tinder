@@ -192,6 +192,7 @@ router
 //router for uploading a photo
 router.put('/photos', upload.single('newAvtar'), async (req, res) => {
 	try {
+		console.log('in the photo upload');
 		//verify token
 		const decoded = jwt.verify(req.headers.authorization.split(' ')[1], 'test');
 		if (decoded === null) {

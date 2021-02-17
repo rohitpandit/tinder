@@ -16,14 +16,26 @@ router.get('/:id', async (req, res) => {
 			return;
 		}
 
+		console.log(conn);
+
 		const users = [];
-		conn.map(async (personId) => {
-			const {
-				data: { user },
-			} = await axios.get(`http://localhost:5001/singleUser/${id}`);
-			users.unshift(user);
-			return;
-		});
+		// conn.map(async (personId) => {
+		// 	const {
+		// 		data: { user },
+		// 	} = await axios.get(`http://localhost:5001/singleUser/${id}`);
+		// 	users.push(user);
+		// 	return;
+		// });
+
+		for (let i = 0; i < conn.length; i++) {
+			const result = await axios.get(
+				`http://localhost:5001/singleUser/${conn[i].user1}`
+			);
+			console.log(conn[i].user1);
+			console.log(result.data[i]);
+		}
+
+		console.log(users);
 
 		res.send(users);
 	} catch (error) {

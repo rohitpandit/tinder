@@ -32,10 +32,11 @@ router.post('/', async (req, res) => {
 	}
 });
 
+//route to get all the data of the users conneciton
 router.get('/connection', async (req, res) => {
 	try {
 		//verify token
-		const decoded = jwt.verify(req.headers.authorization.split(' ')[1], test);
+		const decoded = jwt.verify(req.headers.authorization.split(' ')[1], 'test');
 		if (decoded === null) {
 			res.status(401).json({ error: 'User is not authorized' });
 			return;
@@ -45,6 +46,7 @@ router.get('/connection', async (req, res) => {
 		const result = await axios.get(
 			`http://localhost:5003/connection/${decoded.id}`
 		);
+		console.log(result.data);
 		res.status(200).json({ connecton: result.data });
 	} catch (error) {
 		res.status(500).json({ error: error.message });

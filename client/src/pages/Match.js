@@ -1,9 +1,20 @@
-import React from 'react';
-
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Navbar from '../component/layout/Navbar';
 import Footer from '../component/layout/Footer';
 
 const Match = ({ setIsLogged, setTotalViewed }) => {
+	const [users, setUsers] = useState([]);
+
+	useEffect(() => {
+		const getData = async () => {
+			const res = await axios.get('http://localhost:5000/match/connection');
+			console.log(res.data);
+		};
+
+		getData();
+	}, []);
+
 	return (
 		<div>
 			<Navbar setTotalViewed={setTotalViewed} setIsLogged={setIsLogged} />

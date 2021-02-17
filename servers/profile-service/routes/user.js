@@ -206,14 +206,14 @@ router.put('/photos/:id', async (req, res) => {
 			}
 			await user.save();
 		} else {
-			// const dir = await fs_mkdir(`./upload/${req.params.id}`);
+			const dir = await fs_mkdir(`./upload/${req.params.id}`);
 
 			const count = 0;
 
-			fs_writeFile(
+			await fs_writeFile(
 				`./upload/${req.params.id}/${count}.jpeg`,
-				// Buffer.from(req.body.newAvtar.buffer.data)
-				req.body.newAvtar.buffer.data
+				Buffer.from(req.body.newAvtar.buffer.data)
+				// req.body.newAvtar.buffer.data
 			);
 
 			const user = await User.findById({ _id: id });
