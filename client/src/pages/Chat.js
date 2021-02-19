@@ -5,13 +5,15 @@ import Footer from '../component/layout/Footer';
 
 const socket = io('http://localhost:5004');
 
-const Chat = ({ setIsLogged, setTotalViewed }) => {
-	useEffect(() => {
-		socket.on('connect', () => {
-			console.log('hell');
-		});
-	}, []);
+socket.on('connect', () => {
+	console.log('hell');
+});
 
+socket.onAny((event, ...args) => {
+	console.log(event, ...args);
+});
+
+const Chat = ({ setIsLogged, setTotalViewed }) => {
 	return (
 		<div>
 			<Navbar setTotalViewed={setTotalViewed} setIsLogged={setIsLogged} />

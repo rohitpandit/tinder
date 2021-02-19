@@ -7,9 +7,12 @@ const io = require('socket.io')(http, {
 	},
 });
 
-io.on('connection', (socket) => {
+io.on('connect', (socket) => {
 	console.log('hi');
+	io.emit('hello', 'world');
 });
+
+// io.on('');
 
 const port = 5004;
 
