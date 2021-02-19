@@ -3,18 +3,22 @@ import axios from 'axios';
 import Navbar from '../component/layout/Navbar';
 import Footer from '../component/layout/Footer';
 
-const Match = ({ setIsLogged, setTotalViewed }) => {
+const Match = ({ setIsLogged, setTotalViewed, history }) => {
 	const [users, setUsers] = useState([]);
 
 	useEffect(() => {
 		const getData = async () => {
 			const res = await axios.get('http://localhost:5000/match/connection');
-			// console.log(res.data);
 			setUsers(res.data.connection.users);
 		};
 
 		getData();
 	}, []);
+
+	const onclickHandler = async (id) => {
+		history.push(`/chat/${id}`);
+		window.location.reload();
+	};
 
 	console.log(users);
 
@@ -32,6 +36,7 @@ const Match = ({ setIsLogged, setTotalViewed }) => {
 						{users.length > 0 &&
 							users.map((user) => (
 								<div
+									onClick={() => onclickHandler(user.user.id)}
 									key={user.user.id}
 									className='container d-flex border rounded m-3  bg-light'
 									style={elementStyle}>

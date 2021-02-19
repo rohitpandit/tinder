@@ -7,6 +7,10 @@ const io = require('socket.io')(http, {
 	},
 });
 
+io.on('connection', (socket) => {
+	console.log('hi');
+});
+
 const port = 5004;
 
 http.listen(port, () => {

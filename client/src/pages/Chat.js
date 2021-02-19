@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { io } from 'socket.io-client';
 import Navbar from '../component/layout/Navbar';
 import Footer from '../component/layout/Footer';
 
+const socket = io('http://localhost:5004');
+
 const Chat = ({ setIsLogged, setTotalViewed }) => {
+	useEffect(() => {
+		socket.on('connect', () => {
+			console.log('hell');
+		});
+	}, []);
+
 	return (
 		<div>
 			<Navbar setTotalViewed={setTotalViewed} setIsLogged={setIsLogged} />
