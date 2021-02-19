@@ -1,19 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { io } from 'socket.io-client';
 import Navbar from '../component/layout/Navbar';
 import Footer from '../component/layout/Footer';
 
-const socket = io('http://localhost:5004');
-
-socket.on('connect', () => {
-	console.log('hell');
-});
-
-socket.onAny((event, ...args) => {
-	console.log(event, ...args);
-});
+const socket = io('http://localhost:5004', {});
 
 const Chat = ({ setIsLogged, setTotalViewed }) => {
+	const [message, setMessage] = useState('');
+
+	const onSubmitHandler = (e) => {
+		e.preventDefault();
+
+		if (message.length > 0) {
+			socket.emit('msg', message);
+			setMessage('');
+		}
+	};
+
+	socket.on('msg', (message) => {
+		const ul = document.getElementById('chat-ul');
+		const item = document.createElement('li');
+		item.textContent = message;
+		ul.appendChild(item);
+	});
+
 	return (
 		<div>
 			<Navbar setTotalViewed={setTotalViewed} setIsLogged={setIsLogged} />
@@ -23,7 +33,7 @@ const Chat = ({ setIsLogged, setTotalViewed }) => {
 				<div
 					className='container p-2 mt-2 mb-5 d-flex flex-column border'
 					style={chatContainer}>
-					<div className='container mt-2 mb-2 d-flex border p-2'>
+					{/* <div className='container mt-2 mb-2 d-flex border p-2'>
 						<div className='border rounded-circle overflow-hidden m-1'>
 							<i className='card-img-top fas fa-user fa-3x d-flex justify-content-center align-items-center bg-dark text-light'></i>
 						</div>
@@ -75,11 +85,20 @@ const Chat = ({ setIsLogged, setTotalViewed }) => {
 							elit. Repudiandae architecto optio quas deserunt dolorum officiis
 							nihil id repellat illum ipsa?
 						</div>
-					</div>
+					</div> */}
+
+					<ul id='chat-ul'></ul>
 					<div className='container align-self-end m-2'>
-						<form className='d-flex' action=''>
-							<input className='form-control' type='text' />
-							<button className='btn btn-success'>Send</button>
+						<form className='d-flex' onSubmit={onSubmitHandler}>
+							<input
+								value={message}
+								onChange={(e) => setMessage(e.target.value)}
+								className='form-control'
+								type='text'
+							/>
+							<button type='submit' className='btn btn-success'>
+								Send
+							</button>
 						</form>
 					</div>
 				</div>

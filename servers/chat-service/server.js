@@ -7,12 +7,20 @@ const io = require('socket.io')(http, {
 	},
 });
 
-io.on('connect', (socket) => {
-	console.log('hi');
-	io.emit('hello', 'world');
+io.on('connection', (socket) => {
+	console.log('user connected');
+
+	socket.on('msg', (message) => {
+		console.log(message);
+		io.emit('msg', message);
+	});
+
+	socket.on('disconnect', () => {
+		console.log('disconnected');
+	});
 });
 
-// io.on('');
+io.removeAllListeners('msg');
 
 const port = 5004;
 
