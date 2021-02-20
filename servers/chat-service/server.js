@@ -7,12 +7,14 @@ const io = require('socket.io')(http, {
 	},
 });
 
+let users = {};
+
 io.on('connection', (socket) => {
 	console.log('user connected');
 
-	socket.on('msg', (message) => {
-		console.log(message);
-		io.emit('msg', message);
+	socket.on('private message', (user) => {
+		// console.log(msg);
+		io.emit('message', user);
 	});
 
 	socket.on('disconnect', () => {

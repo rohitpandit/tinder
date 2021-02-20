@@ -1,28 +1,54 @@
 import React, { useState } from 'react';
 import { io } from 'socket.io-client';
+import moment from 'moment';
 import Navbar from '../component/layout/Navbar';
 import Footer from '../component/layout/Footer';
 
-const socket = io('http://localhost:5004', {});
+const socket = io('http://localhost:5004', {
+	userId: localStorage.token.split('.')[1],
+});
+
+const getUser = (sendTo, message) => {
+	return {
+		sendTo,
+		message,
+		date: moment().format('LT'),
+	};
+};
+
+socket.on('message', (user) => {
+	console.log('in the private message');
+
+	const ul = document.getElementById('chat-ul');
+	const item = document.createElement('li');
+	const div = document.createElement('div');
+	div.textContent = user.message;
+	const p = document.createElement('p');
+	p.innerText = user.date;
+	div.appendChild(p);
+	// item. = div;
+	ul.appendChild(div);
+});
 
 const Chat = ({ setIsLogged, setTotalViewed }) => {
 	const [message, setMessage] = useState('');
+
+	//user id to send to
+	// console.log(window.location.href.split('/')[4]);
 
 	const onSubmitHandler = (e) => {
 		e.preventDefault();
 
 		if (message.length > 0) {
-			socket.emit('msg', message);
+			socket.emit(
+				'private message',
+				getUser(window.location.href.split('/')[4], message)
+			);
 			setMessage('');
 		}
-	};
 
-	socket.on('msg', (message) => {
-		const ul = document.getElementById('chat-ul');
-		const item = document.createElement('li');
-		item.textContent = message;
-		ul.appendChild(item);
-	});
+		document.getElementById('message-input').focus();
+	};
 
 	return (
 		<div>
@@ -91,6 +117,7 @@ const Chat = ({ setIsLogged, setTotalViewed }) => {
 					<div className='container align-self-end m-2'>
 						<form className='d-flex' onSubmit={onSubmitHandler}>
 							<input
+								id='message-input'
 								value={message}
 								onChange={(e) => setMessage(e.target.value)}
 								className='form-control'
