@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-const Navbar = ({ setIsLogged, setTotalViewed }) => {
+const Navbar = ({ setIsLogged, setTotalViewed, currentPage }) => {
 	const history = useHistory();
 
 	const logoutHandler = (e) => {
@@ -17,7 +17,7 @@ const Navbar = ({ setIsLogged, setTotalViewed }) => {
 	};
 
 	return (
-		<nav className='navbar navbar-expand-lg navbar-light bg-light'>
+		<nav className='navbar navbar-expand-lg navbar-light theme-color'>
 			<div className='container-fluid'>
 				<Link className='navbar-brand' to='/'>
 					<i className='fas fa-fire fa-2x'></i>
@@ -33,30 +33,41 @@ const Navbar = ({ setIsLogged, setTotalViewed }) => {
 					<span className='navbar-toggler-icon'></span>
 				</button>
 				<div className='collapse navbar-collapse' id='navbarSupportedContent'>
-					<ul className='navbar-nav me-auto mb-2 mb-lg-0'>
+					<ul className='navbar-nav m-auto mb-2 mb-lg-0'>
 						<li className='nav-item'>
-							<Link className='nav-link ' aria-current='page' to='/'>
+							<Link
+								className={`nav-link ${
+									currentPage === 'Home' ? 'active' : ''
+								} `}
+								aria-current='page'
+								to='/'>
 								Home
 							</Link>
 						</li>
 						<li className='nav-item'>
-							<Link className='nav-link' to='/match'>
+							<Link
+								className={`nav-link ${
+									currentPage === 'Match' ? 'active' : ''
+								}`}
+								to='/match'>
 								My Matches
 							</Link>
 						</li>
 						<li className='nav-item'>
-							<Link className='nav-link' to='/profile'>
+							<Link
+								className={`nav-link ${
+									currentPage === 'Profile' ? 'active' : ''
+								}`}
+								to='/profile'>
 								Profile
 							</Link>
 						</li>
-						<li className='nav-item'>
-							<form onSubmit={logoutHandler}>
-								<button className='btn btn-primary' type='submit'>
-									Logout
-								</button>
-							</form>
-						</li>
 					</ul>
+					<form className='float-right' onSubmit={logoutHandler}>
+						<button className='btn btn-primary' type='submit'>
+							Logout
+						</button>
+					</form>
 				</div>
 			</div>
 		</nav>

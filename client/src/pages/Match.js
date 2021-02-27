@@ -23,10 +23,14 @@ const Match = ({ setIsLogged, setTotalViewed, history }) => {
 	console.log(users);
 
 	return (
-		<div>
-			<Navbar setTotalViewed={setTotalViewed} setIsLogged={setIsLogged} />
+		<div className='d-flex flex-column ' style={style}>
+			<Navbar
+				setTotalViewed={setTotalViewed}
+				setIsLogged={setIsLogged}
+				currentPage='Match'
+			/>
 
-			<div className='container mb-5 mt-2' style={style}>
+			<div className='container'>
 				<h1>My Matches</h1>
 				<hr />
 				{users.length === 0 ? (
@@ -38,7 +42,7 @@ const Match = ({ setIsLogged, setTotalViewed, history }) => {
 								<div
 									onClick={() => onclickHandler(user.user.id)}
 									key={user.user.id}
-									className='container d-flex border rounded m-3  bg-light'
+									className=' d-flex border rounded  bg-light'
 									style={elementStyle}>
 									<div className='border rounded-circle overflow-hidden m-1'>
 										<i className='card-img-top fas fa-user fa-3x d-flex justify-content-center align-items-center bg-dark text-light'></i>
@@ -57,7 +61,8 @@ const Match = ({ setIsLogged, setTotalViewed, history }) => {
 };
 
 const style = {
-	// height: '90vh',
+	minHeight: '100vh',
+	position: 'relative',
 };
 
 const elementStyle = {

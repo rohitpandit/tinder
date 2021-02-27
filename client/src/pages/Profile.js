@@ -172,7 +172,11 @@ const Profile = ({ setIsLogged, setTotalViewed }) => {
 
 	return (
 		<div>
-			<Navbar setTotalViewed={setTotalViewed} setIsLogged={setIsLogged} />
+			<Navbar
+				setTotalViewed={setTotalViewed}
+				setIsLogged={setIsLogged}
+				currentPage='Profile'
+			/>
 			<ToastContainer />
 			<div className='container mb-5 mt-2'>
 				<h1>Profile</h1>

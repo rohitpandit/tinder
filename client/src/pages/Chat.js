@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, Fragment } from 'react';
 import { io } from 'socket.io-client';
 import moment from 'moment';
 import Navbar from '../component/layout/Navbar';
@@ -77,7 +77,7 @@ const Chat = ({ setIsLogged, setTotalViewed }) => {
 	}, [socket, addToChat]);
 
 	return (
-		<div>
+		<Fragment>
 			<Navbar setTotalViewed={setTotalViewed} setIsLogged={setIsLogged} />
 			<div className='container mb-5 mt-2'>
 				<h1>Chat</h1>
@@ -130,7 +130,7 @@ const Chat = ({ setIsLogged, setTotalViewed }) => {
 			</div>
 
 			<Footer />
-		</div>
+		</Fragment>
 	);
 };
 

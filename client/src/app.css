@@ -1,3 +1,11 @@
 :root {
 	--theme-main: #ec1350;
+
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+.theme-color {
+	background-color: rgb(250, 150, 177);
 }
