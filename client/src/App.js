@@ -109,7 +109,7 @@ function App() {
 								setIsLogged={setIsLogged}
 							/>
 						) : (
-							<Redirect from='/chat/:id' to='/login' />
+							<Redirect to='/login' />
 						)}
 					</Route>
 				</Switch>
