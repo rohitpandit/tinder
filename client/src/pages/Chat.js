@@ -42,19 +42,15 @@ const Chat = ({ setIsLogged, setTotalViewed }) => {
 		console.log(sender);
 		console.log('added to chat');
 
-		conversation.push({ message, sender });
-		console.log(conversation);
-		setChat(conversation);
+		setChat([...chat, { sender, message }]);
 
-		localStorage.setItem(
-			`conversations[${recipient}]`,
-			JSON.stringify(conversation)
-		);
+		localStorage.setItem(`conversations[${recipient}]`, JSON.stringify(chat));
+		setMessage('');
 	};
 
 	//function for handling the message sending form the user
 	const onMessageSend = (sendTo, message) => {
-		console.log(conversation);
+		console.log(chat);
 		socket.emit('send-message', { recipient: sendTo, message });
 		addToChat({ sender: 'You', message });
 	};
@@ -89,11 +85,10 @@ const Chat = ({ setIsLogged, setTotalViewed }) => {
 				<div
 					className='container p-2 my-2 d-flex flex-column  overflow-auto'
 					style={chatContainer}>
-					{conversation &&
-						conversation.map((converse, index) => {
-							console.log(index);
-							console.log(conversation.length, chat.length);
-							const lastMessage = conversation.length - 1;
+					{chat &&
+						chat.map((converse, index) => {
+							const lastMessage = chat.length - 1;
+							// console.log(conversation[lastMessage]);
 							return (
 								<div
 									ref={lastMessage ? setRef : null}
@@ -103,6 +98,7 @@ const Chat = ({ setIsLogged, setTotalViewed }) => {
 											? 'align-self-end align-items-end'
 											: 'align-self-start'
 									}`}>
+									{console.log(converse.message)}
 									<div
 										className={`border rounded p-1 ${
 											converse.sender === 'You'
