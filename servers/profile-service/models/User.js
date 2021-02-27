@@ -14,6 +14,9 @@ const userSchema = mongoose.Schema(
 		gender: {
 			type: String,
 		},
+		interestedGender: {
+			type: String,
+		},
 		city: {
 			type: String,
 		},

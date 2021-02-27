@@ -45,6 +45,7 @@ router
 				lastName,
 				dob,
 				gender,
+				interestedGender,
 				city,
 				state,
 				zipcode,
@@ -55,6 +56,7 @@ router
 				!lastName ||
 				!dob ||
 				!gender ||
+				!interestedGender ||
 				!city ||
 				!state ||
 				!zipcode ||
@@ -82,6 +84,7 @@ router
 					lastName,
 					dob,
 					gender,
+					interestedGender,
 					city,
 					state,
 					zipcode,
@@ -104,6 +107,7 @@ router
 				lastName,
 				dob,
 				gender,
+				interestedGender,
 				city,
 				state,
 				zipcode,
@@ -115,6 +119,7 @@ router
 				!lastName ||
 				!dob ||
 				!gender ||
+				!interestedGender ||
 				!city ||
 				!state ||
 				!zipcode ||
@@ -125,6 +130,7 @@ router
 					lastName,
 					dob,
 					gender,
+					interestedGender,
 					city,
 					state,
 					country,
@@ -155,6 +161,7 @@ router
 					lastName,
 					dob,
 					gender,
+					interestedGender,
 					city,
 					state,
 					zipcode,

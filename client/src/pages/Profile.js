@@ -11,6 +11,7 @@ const Profile = ({ setIsLogged, setTotalViewed }) => {
 	const [lastName, setLastName] = useState('');
 	const [dob, setDob] = useState('');
 	const [gender, setGender] = useState('');
+	const [interestedGender, setInterestedGender] = useState('');
 	const [city, setCity] = useState('');
 	const [state, setState] = useState('');
 	const [zipcode, setZipcode] = useState('');
@@ -56,6 +57,9 @@ const Profile = ({ setIsLogged, setTotalViewed }) => {
 			if (user.gender) {
 				setGender(user.gender);
 			}
+			if (user.interestedGender) {
+				setInterestedGender(user.interestedGender);
+			}
 
 			setFormLoading(false);
 
@@ -90,6 +94,7 @@ const Profile = ({ setIsLogged, setTotalViewed }) => {
 				firstName === '' ||
 				lastName === '' ||
 				gender === '' ||
+				interestedGender === '' ||
 				dob === '' ||
 				state === '' ||
 				city === '' ||
@@ -105,6 +110,7 @@ const Profile = ({ setIsLogged, setTotalViewed }) => {
 				firstName,
 				lastName,
 				gender,
+				interestedGender,
 				dob,
 				state,
 				city,
@@ -234,6 +240,23 @@ const Profile = ({ setIsLogged, setTotalViewed }) => {
 										id='inputGroupSelect01'
 										value={gender}
 										onChange={(e) => setGender(e.target.value)}>
+										<option selected>Choose...</option>
+										<option value='male'>Male</option>
+										<option value='female'>Femal</option>
+										<option value='other'>Other</option>
+									</select>
+								</div>
+								<div className='input-group mb-3'>
+									<div className='input-group-prepend'>
+										<span className='input-group-text' id='basic-addon3'>
+											Interested Gender
+										</span>
+									</div>
+									<select
+										className='form-select form-control'
+										id='inputGroupSelect01'
+										value={interestedGender}
+										onChange={(e) => setInterestedGender(e.target.value)}>
 										<option selected>Choose...</option>
 										<option value='male'>Male</option>
 										<option value='female'>Femal</option>

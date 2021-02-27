@@ -57,20 +57,15 @@ router
 				lastName,
 				dob,
 				gender,
+				interestedGender,
 				city,
 				state,
 				zipcode,
 				country,
 			} = req.body;
 			if (
-				!firstName ||
-				!lastName ||
-				!dob ||
-				!gender ||
-				!city ||
-				!state ||
-				!zipcode ||
-				!country
+				(!firstName || !lastName || !dob || !gender || !interestedGender,
+				!city || !state || !zipcode || !country)
 			) {
 				console.log('Enter all the details');
 				res.status(400).json({
@@ -85,6 +80,7 @@ router
 				lastName,
 				dob,
 				gender,
+				interestedGender,
 				city,
 				state,
 				zipcode,
@@ -111,6 +107,7 @@ router
 				lastName,
 				dob,
 				gender,
+				interestedGender,
 				city,
 				state,
 				zipcode,
@@ -128,6 +125,7 @@ router
 				user.lastName = lastName;
 				user.dob = dob;
 				user.gender = gender;
+				user.interestedGender = interestedGender;
 				user.city = city;
 				user.state = state;
 				user.country = country;
@@ -146,6 +144,7 @@ router
 					lastName,
 					dob,
 					gender,
+					interestedGender,
 					city,
 					state,
 					country,
