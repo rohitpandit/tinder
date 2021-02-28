@@ -7,6 +7,7 @@ const user = require('./routes/user');
 const recommendation = require('./routes/recommendation');
 const match = require('./routes/match');
 const db = require('./db');
+const multer = require('multer');
 
 const app = express();
 const port = 5000;

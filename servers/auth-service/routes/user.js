@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const router = express.Router();
 
+const maxSize = 1 * 1000 * 1000;
+
 const upload = multer();
 
 router
