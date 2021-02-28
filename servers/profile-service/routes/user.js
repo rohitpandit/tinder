@@ -112,7 +112,6 @@ router
 				state,
 				zipcode,
 				country,
-				photos,
 			} = req.body;
 
 			const { id } = req.params;

@@ -9,12 +9,19 @@ const util = require('util');
 const fs_readFile = util.promisify(fs.readFile);
 
 //route just to send the user info
-router.get('/user/:skip', async (req, res) => {
+router.get('/user/:skip/:gender', async (req, res) => {
 	try {
-		const { skip } = req.params;
+		let { skip, gender } = req.params;
 		//sending just one user at a time
 		// const users = await User.find({ gender: 'female' })
-		const users = await User.find().skip(Number.parseInt(skip)).limit(1);
+		console.log(gender);
+		let users;
+		if (gender === 'all') {
+			users = await User.find().skip(Number.parseInt(skip)).limit(1);
+		} else {
+			users = await User.find({ gender }).skip(Number.parseInt(skip)).limit(1);
+		}
+
 		if (users[0] === null) {
 			res.status(200).json({ error: 'No more Profiles available' });
 			return;
@@ -38,17 +45,24 @@ router.get('/user/:skip', async (req, res) => {
 
 //random comment
 //route to send the photo of user
-router.get('/photo/:photoNum/:skip', async (req, res) => {
+router.get('/photo/:photoNum/:skip/:gender', async (req, res) => {
 	try {
-		const { photoNum, skip } = req.params;
+		const { photoNum, skip, gender } = req.params;
 		if (photoNum > 4 || photoNum < 0) {
 			res.status(400).json({ error: 'Invalid url' });
 			return;
 		}
 
+		console.log(gender);
+
 		//sending just one user at a time
 		// const users = await User.find({ gender: 'female' })
-		const users = await User.find().skip(Number.parseInt(skip)).limit(1);
+		let users;
+		if (gender === 'all') {
+			users = await User.find().skip(Number.parseInt(skip)).limit(1);
+		} else {
+			users = await User.find({ gender }).skip(Number.parseInt(skip)).limit(1);
+		}
 		if (users[0] === null) {
 			res.status(200).json({ error: 'No more Profiles available' });
 			return;

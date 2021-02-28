@@ -59,6 +59,7 @@ const Profile = ({ setIsLogged, setTotalViewed }) => {
 			}
 			if (user.interestedGender) {
 				setInterestedGender(user.interestedGender);
+				localStorage.setItem('interestedGender', user.interestedGender);
 			}
 
 			setFormLoading(false);
