@@ -36,13 +36,15 @@ const Index = ({ setIsLogged, totalViewed, setTotalViewed }) => {
 	//function for setting the match to the get saved in the match service
 	const setAccept = async (personId) => {
 		console.log(personId);
-		await axios.post('http://localhost:5000/match', { personId });
+		await axios.post('https://tinder-auth-service.herokuapp.com/match', {
+			personId,
+		});
 	};
 
 	const getUserName = async (skip) => {
 		try {
 			const userData = await axios.get(
-				`http://localhost:5000/index/user/${skip}/${gender}`
+				`https://tinder-auth-service.herokuapp.com/index/user/${skip}/${gender}`
 			);
 			const { user } = userData.data;
 			console.log(user);
@@ -66,7 +68,7 @@ const Index = ({ setIsLogged, totalViewed, setTotalViewed }) => {
 		try {
 			//getting the first photo of the user
 			const photo = await axios.get(
-				`http://localhost:5000/index/photo/${photoNum}/${skip}/${gender}`
+				`https://tinder-auth-service.herokuapp.com/index/photo/${photoNum}/${skip}/${gender}`
 			);
 			console.log(photo.data.photo);
 

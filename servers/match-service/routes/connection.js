@@ -23,7 +23,7 @@ router.get('/:id', async (req, res) => {
 
 		for (let i = 0; i < conn.length; i++) {
 			const result = await axios.get(
-				`http://localhost:5001/singleUser/${conn[i].user2}`
+				`https://tinder-profile-service.herokuapp.com/singleUser/${conn[i].user2}`
 			);
 			users.push(result.data);
 		}

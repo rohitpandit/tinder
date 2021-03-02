@@ -24,7 +24,7 @@ router
 			}
 			console.log('in the get user ');
 			const result = await axios.get(
-				`http://localhost:5001/user/${decoded.id}`,
+				`https://tinder-profile-service.herokuapp.com/user/${decoded.id}`,
 				{
 					headers: { 'content-type': 'application/json' },
 				}
@@ -80,7 +80,7 @@ router
 				return;
 			}
 			const result = await axios.post(
-				`http://localhost:5001/user/${decoded.id}`,
+				`https://tinder-profile-service.herokuapp.com/user/${decoded.id}`,
 				{
 					firstName,
 					lastName,
@@ -157,7 +157,7 @@ router
 				return;
 			}
 			const result = await axios.put(
-				`http://localhost:5001/user/${decoded.id}`,
+				`https://tinder-profile-service.herokuapp.com/user/${decoded.id}`,
 				{
 					firstName,
 					lastName,
@@ -191,7 +191,7 @@ router
 				return;
 			}
 			const result = await axios.delete(
-				`http://localhost:5001/user/${decoded.id}`
+				`https://tinder-profile-service.herokuapp.com/user/${decoded.id}`
 			);
 		} catch (error) {
 			res.status(500).json({ error: error.message });
@@ -222,7 +222,7 @@ router.put('/photos', upload.single('newAvtar'), async (req, res) => {
 		};
 
 		const result = await axios.put(
-			`http://localhost:5001/user/photos/${decoded.id}`,
+			`https://tinder-profile-service.herokuapp.com/user/photos/${decoded.id}`,
 			form
 		);
 
@@ -243,7 +243,7 @@ router.delete('/photos/:count', async (req, res) => {
 		}
 		const { count } = req.params;
 		const result = await axios.delete(
-			`http://localhost:5001/user/photos/${decoded.id}/${count}`
+			`https://tinder-profile-service.herokuapp.com/user/photos/${decoded.id}/${count}`
 		);
 		console.log(result.data);
 		console.log('in the auth service');

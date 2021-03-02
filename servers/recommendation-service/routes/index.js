@@ -11,7 +11,7 @@ router.get('/user/:skip/:gender', async (req, res) => {
 	try {
 		const { skip, gender } = req.params;
 		const result = await axios.get(
-			`http://localhost:5001/bulkProfile/user/${skip}/${gender}`
+			`https://tinder-profile-service.herokuapp.com/bulkProfile/user/${skip}/${gender}`
 		);
 
 		res.status(200).json({ user: result.data.user });
@@ -30,7 +30,7 @@ router.get('/photo/:photoNum/:skip/:gender', async (req, res) => {
 			return;
 		}
 		const result = await axios.get(
-			`http://localhost:5001/bulkProfile/photo/${photoNum}/${skip}/${gender}`
+			`https://tinder-profile-service.herokuapp.com/bulkProfile/photo/${photoNum}/${skip}/${gender}`
 		);
 
 		res.status(200).json({ photo: result.data });

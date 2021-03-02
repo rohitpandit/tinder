@@ -8,7 +8,9 @@ const Match = ({ setIsLogged, setTotalViewed, history }) => {
 
 	useEffect(() => {
 		const getData = async () => {
-			const res = await axios.get('http://localhost:5000/match/connection');
+			const res = await axios.get(
+				'https://tinder-auth-service.herokuapp.com/match/connection'
+			);
 			setUsers(res.data.connection.users);
 		};
 

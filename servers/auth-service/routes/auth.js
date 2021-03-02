@@ -72,7 +72,7 @@ router.post('/signup', async (req, res) => {
 
 		//creating an empty value for the user in profile service
 		const userProfile = await axios.put(
-			`http://localhost:5001/user/${newUser._id}`
+			`https://tinder-profile-service.herokuapp.com/user/${newUser._id}`
 		);
 
 		const token = jwt.sign({ id: newUser._id }, 'test');

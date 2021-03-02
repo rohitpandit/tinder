@@ -12,7 +12,9 @@ if (localStorage.getItem('token')) {
 	id = localStorage.getItem('token');
 }
 
-const socket = io('http://localhost:5004', { query: { id } });
+const socket = io('https://tinder-chat-service.herokuapp.com', {
+	query: { id },
+});
 
 //chat storing locally to the localstore
 let conversation = null;

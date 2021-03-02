@@ -15,7 +15,7 @@ router.get('/user/:skip/:gender', async (req, res) => {
 		const { skip, gender } = req.params;
 
 		const result = await axios.get(
-			`http://localhost:5002/user/${skip}/${gender}`
+			`https://tinder-recommendation-service.herokuapp.com/user/${skip}/${gender}`
 		);
 
 		res.status(200).send(result.data);
@@ -40,7 +40,7 @@ router.get('/photo/:photoNum/:skip/:gender', async (req, res) => {
 		}
 
 		const result = await axios.get(
-			`http://localhost:5002/photo/${photoNum}/${skip}/${gender}`
+			`https://tinder-recommendation-service.herokuapp.com/photo/${photoNum}/${skip}/${gender}`
 		);
 
 		console.log(typeof result.data.photo);

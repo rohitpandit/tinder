@@ -26,7 +26,9 @@ const Profile = ({ setIsLogged, setTotalViewed }) => {
 		const getData = async () => {
 			setImageLoading(true);
 			setFormLoading(true);
-			const initialData = await axios.get('http://localhost:5000/user');
+			const initialData = await axios.get(
+				'https://tinder-auth-service.herokuapp.com/user'
+			);
 			if (initialData.status !== 200) {
 				return;
 			}
@@ -107,7 +109,7 @@ const Profile = ({ setIsLogged, setTotalViewed }) => {
 			}
 
 			setFormLoading(true);
-			await axios.put('http://localhost:5000/user', {
+			await axios.put('https://tinder-auth-service.herokuapp.com/user', {
 				firstName,
 				lastName,
 				gender,
@@ -148,7 +150,11 @@ const Profile = ({ setIsLogged, setTotalViewed }) => {
 			};
 
 			setImageLoading(true);
-			await axios.put('http://localhost:5000/user/photos', formData, config);
+			await axios.put(
+				'https://tinder-auth-service.herokuapp.com/user/photos',
+				formData,
+				config
+			);
 			setImageLoading(false);
 			setTempImage(null);
 			window.location.reload();
@@ -161,7 +167,9 @@ const Profile = ({ setIsLogged, setTotalViewed }) => {
 	const deleteImageHandler = async (count) => {
 		try {
 			setImageLoading(true);
-			await axios.delete(`http://localhost:5000/user/photos/${count}`);
+			await axios.delete(
+				`https://tinder-auth-service.herokuapp.com/user/photos/${count}`
+			);
 			setImageLoading(false);
 			setTempImage(null);
 			window.location.reload();

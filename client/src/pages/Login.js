@@ -14,10 +14,13 @@ const Login = ({ setIsLogged, history }) => {
 		try {
 			e.preventDefault();
 			setLoading(true);
-			const res = await axios.post('http://localhost:5000/auth/login', {
-				email,
-				password,
-			});
+			const res = await axios.post(
+				'https://tinder-auth-service.herokuapp.com/auth/login',
+				{
+					email,
+					password,
+				}
+			);
 
 			const { token } = res.data;
 			setLoading(false);

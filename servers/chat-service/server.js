@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const http = require('http').createServer(app);
 const io = require('socket.io')(http, {
-	cors: 'http://localhost:3000',
+	cors: 'https://mystifying-gates-ddf54b.netlify.app',
 });
 
 app.use(bodyParser.json());

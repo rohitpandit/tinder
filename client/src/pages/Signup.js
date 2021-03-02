@@ -23,10 +23,13 @@ const Signup = ({ history, setIsLogged }) => {
 
 			if (password === confirmPassword) {
 				setLoading(true);
-				const res = await axios.post('http://localhost:5000/auth/signup', {
-					email,
-					password,
-				});
+				const res = await axios.post(
+					'https://tinder-auth-service.herokuapp.com/auth/signup',
+					{
+						email,
+						password,
+					}
+				);
 
 				setLoading(false);
 

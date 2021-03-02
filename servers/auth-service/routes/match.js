@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
 
 		await axios({
 			method: 'post',
-			url: `http://localhost:5003/match/${decoded.id}`,
+			url: `https://tinder-match-service.herokuapp.com/match/${decoded.id}`,
 			data: {
 				personId: personId,
 			},
@@ -44,7 +44,7 @@ router.get('/connection', async (req, res) => {
 
 		console.log('hi');
 		const result = await axios.get(
-			`http://localhost:5003/connection/${decoded.id}`
+			`https://tinder-match-service.herokuapp.com/connection/${decoded.id}`
 		);
 		console.log(result.data);
 		res.status(200).json({ connection: result.data });
