@@ -21,7 +21,7 @@ const Index = ({ setIsLogged, totalViewed, setTotalViewed }) => {
 	const [age, setAge] = useState(0);
 	const [id, setId] = useState('');
 	const [photoCount, setPhotoCount] = useState(0);
-	const [loading, setLoading] = useState(false);
+	// const [loading, setLoading] = useState(false);
 	const [currentCount, setCurrntCount] = useState(0);
 	const [finished, setFinished] = useState(false);
 
@@ -54,9 +54,9 @@ const Index = ({ setIsLogged, totalViewed, setTotalViewed }) => {
 				new Date().toLocaleDateString('en-US').split('/')[2] -
 					user.dob.split('-')[0]
 			);
-			if (userData.data.photoCount !== 0) {
-				setLoading(true);
-			}
+			// if (userData.data.photoCount !== 0) {
+			// setLoading(true);
+			// }
 		} catch (error) {
 			setFinished(true);
 		}
@@ -78,7 +78,7 @@ const Index = ({ setIsLogged, totalViewed, setTotalViewed }) => {
 			let img = document.getElementById('profile-img');
 			console.log(img);
 			img.src = url;
-			setLoading(false);
+			// setLoading(false);
 
 			img.onload = (e) => URL.revokeObjectURL(url);
 		} catch (error) {
@@ -168,7 +168,7 @@ const Index = ({ setIsLogged, totalViewed, setTotalViewed }) => {
 									<img
 										id='profile-img'
 										className='card-img-top '
-										alt='profile image'
+										alt='profile '
 										style={{ height: '30rem', objectFit: 'cover' }}
 									/>
 								)}

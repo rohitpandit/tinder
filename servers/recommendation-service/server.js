@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const app = express();
 const router = require('./routes/index');
 
-const port = 5002;
+const port = process.env.PORT || 5002;
 
 app.use(morgan('dev'));
 app.use(express.json({ limit: '50mb' }));

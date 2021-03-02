@@ -10,6 +10,10 @@ const io = require('socket.io')(http, {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.get('/', (req, res) => {
+	res.status(200).json({ msg: 'hello' });
+});
+
 io.use((socket, next) => {
 	if (socket.handshake.query && socket.handshake.query.id) {
 		jwt.verify(socket.handshake.query.id, 'test', (err, payload) => {
@@ -40,7 +44,7 @@ io.on('connection', (socket) => {
 
 io.removeAllListeners('msg');
 
-const port = 5004;
+const port = process.env.PORT || 5004;
 
 http.listen(port, () => {
 	console.log(`chat server listening at port: ${port}`);

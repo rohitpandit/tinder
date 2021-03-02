@@ -2,6 +2,10 @@ const express = require('express');
 const axios = require('axios');
 const router = express.Router();
 
+router.get('/', (req, res) => {
+	res.status(200).json({ msg: 'hello' });
+});
+
 //router to get only the data
 router.get('/user/:skip/:gender', async (req, res) => {
 	try {

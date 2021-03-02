@@ -8,7 +8,7 @@ const bulkRouter = require('./routes/bulkProfile');
 const singleUser = require('./routes/singleUser');
 
 const app = express();
-const port = 5001;
+const port = process.env.PORT || 5001;
 
 app.use(morgan('dev'));
 app.use(express.json({ limit: '50mb' }));

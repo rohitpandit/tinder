@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, Fragment } from 'react';
 import { io } from 'socket.io-client';
-import moment from 'moment';
+// import moment from 'moment';
 import Navbar from '../component/layout/Navbar';
 import Footer from '../component/layout/Footer';
 
@@ -34,19 +34,22 @@ const Chat = ({ setIsLogged, setTotalViewed }) => {
 		if (node) {
 			node.scrollIntoView({ smooth: true });
 		}
-	});
+	}, []);
 
 	//function to store the message to the localstore
 	//this function handles all the messages
-	const addToChat = ({ sender, message }) => {
-		console.log(sender);
-		console.log('added to chat');
+	const addToChat = useCallback(
+		({ sender, message }) => {
+			console.log(sender);
+			console.log('added to chat');
 
-		setChat([...chat, { sender, message }]);
+			setChat([...chat, { sender, message }]);
 
-		localStorage.setItem(`conversations[${recipient}]`, JSON.stringify(chat));
-		setMessage('');
-	};
+			localStorage.setItem(`conversations[${recipient}]`, JSON.stringify(chat));
+			setMessage('');
+		},
+		[chat]
+	);
 
 	//function for handling the message sending form the user
 	const onMessageSend = (sendTo, message) => {
@@ -74,7 +77,7 @@ const Chat = ({ setIsLogged, setTotalViewed }) => {
 		socket.on('recieve-message', addToChat);
 
 		return () => socket.off('recieve-message');
-	}, [socket, addToChat]);
+	}, [addToChat]);
 
 	return (
 		<Fragment>
@@ -138,9 +141,9 @@ const chatContainer = {
 	height: '60vh',
 };
 
-const messageContainer = {
-	height: '75vh',
-	overflow: 'scroll',
-};
+// const messageContainer = {
+// 	height: '75vh',
+// 	overflow: 'scroll',
+// };
 
 export default Chat;
